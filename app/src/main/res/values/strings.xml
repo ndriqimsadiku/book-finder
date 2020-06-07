@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Book Finder</string>
+
+    <string name="base_url">https://www.googleapis.com/books/v1/</string>
+    <string name="google_books_api_key">AIzaSyCaC8Zm07i63NpDtxQynufOPdX3-40tAyA</string>
 </resources>
