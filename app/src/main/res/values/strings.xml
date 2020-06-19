@@ -3,4 +3,14 @@
 
     <string name="base_url">https://www.googleapis.com/books/v1/</string>
     <string name="google_books_api_key">AIzaSyCaC8Zm07i63NpDtxQynufOPdX3-40tAyA</string>
+    <string name="skip">Skip</string>
+    <string name="book_finder">Book Finder</string>
+    <string name="get_started">Get Started</string>
+    <string name="share_your_favorite_books_with_your_family_and_friends">Share your favorite books with your family and friends</string>
+    <string name="discovery_20_million_books_shelved_online">Discovery 20 Million Books Shelved Online</string>
+    <string name="buy_and_sell_books_with_us">Buy And Sell Books With Us</string>
+    <string name="welcome_n_choose_the_topics">Welcome \nChoose the topics</string>
+    <string name="apply">Apply</string>
+    <string name="search_books_authors">Search Books, Authors</string>
+    <string name="our_top_picks">Our Top Picks</string>
 </resources>
