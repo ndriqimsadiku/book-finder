@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.ChooseTopicsActivity">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/topics_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:horizontalSpacing="16dp"
+            android:paddingTop="120dp"
+            app:layout_constraintBottom_toTopOf="@id/apply_topics_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:listitem="@layout/topics_grid_item" />
+
+        <ImageView
+            android:id="@+id/header_dark"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_header_dark"
+            android:translationY="-180dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/welcome_n_choose_the_topics"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/apply_topics_button"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/apply"
+            android:layout_marginBottom="16dp"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
