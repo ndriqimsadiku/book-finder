@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,6 +14,11 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="HomeTheme" parent="AppTheme">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#ff91b7</item>
+    </style>
+
     <style name="buttonStyle">
         <item name="android:padding">12dp</item>
         <item name="android:layout_marginStart">@dimen/space_normal</item>
@@ -23,6 +28,20 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="cornerRadius">@dimen/space_small</item>
+    </style>
+
+    <style name="profileDetailsBold">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="profileDetailsMedium">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
     </style>
 
 </resources>
