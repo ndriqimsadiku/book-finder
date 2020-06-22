@@ -1,4 +1,4 @@
-package com.bmn.bookfinder;
+package com.bmn.bookfinder.fragments;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.TopPicksAdapter;
 import com.bmn.bookfinder.adapters.TopicsAdapter;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
@@ -26,7 +27,7 @@ public class DiscoverFragment extends Fragment {
 
     FragmentDiscoverBinding binding;
 
-    private DiscoverFragment() {
+    public DiscoverFragment() {
 
     }
 
