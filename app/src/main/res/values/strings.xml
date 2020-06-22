@@ -13,4 +13,11 @@
     <string name="apply">Apply</string>
     <string name="search_books_authors">Search Books, Authors</string>
     <string name="our_top_picks">Our Top Picks</string>
+    <string name="trending_books">Trending Books</string>
+    <string name="best_share">Best share</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="discover">Discover</string>
+    <string name="favorites">Favorites</string>
+    <string name="profile">Profile</string>
 </resources>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_header_dark_expanded"
+                android:translationY="-90dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/light_header"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_header_light_expanded"
+                android:translationY="-90dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/top_picks_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/our_top_picks"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top_picks_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="@id/light_header"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/top_picks_item" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topics_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:translationY="-30dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/light_header"
+                tools:listitem="@layout/topics_list_item" />
+
+            <TextView
+                android:id="@+id/trending_books_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/trending_books"
+                android:textSize="24sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topics_rv" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/trending_first_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginLeft="16dp"
+                android:clickable="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trending_books_text"
+                app:layout_constraintWidth_percent="0.28">
+
+                <ImageView
+                    android:id="@+id/trending_first_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/trending_second_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                app:layout_constraintLeft_toRightOf="@id/trending_first_card"
+                app:layout_constraintRight_toLeftOf="@id/trending_third_card"
+                app:layout_constraintTop_toBottomOf="@id/trending_books_text"
+                app:layout_constraintWidth_percent="0.28">
+
+                <ImageView
+                    android:id="@+id/trending_second_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/trending_third_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trending_books_text"
+                app:layout_constraintWidth_percent="0.28">
+
+                <ImageView
+                    android:id="@+id/trending_third_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/trending_fourth_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trending_first_card"
+                app:layout_constraintWidth_percent="0.28">
+
+                <ImageView
+                    android:id="@+id/trending_fourth_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/trending_fifth_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toRightOf="@id/trending_fourth_card"
+                app:layout_constraintRight_toLeftOf="@id/trending_sixth_card"
+                app:layout_constraintTop_toBottomOf="@id/trending_second_card"
+                app:layout_constraintWidth_percent="0.28">
+
+                <ImageView
+                    android:id="@+id/trending_fifth_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/trending_sixth_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trending_third_card"
+                app:layout_constraintWidth_percent="0.28">
+
+                <ImageView
+                    android:id="@+id/trending_sixth_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:id="@+id/best_share_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/best_share"
+                android:textSize="24sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trending_sixth_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

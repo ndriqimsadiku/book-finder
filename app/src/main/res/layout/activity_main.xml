@@ -1,83 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".activities.MainActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/search_card_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".activities.MainActivity">
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="32dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="500dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:translationY="-90dp"
-                android:src="@drawable/ic_header_dark_expanded"/>
-
-            <ImageView
-                android:layout_width="500dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:translationY="-90dp"
-                android:src="@drawable/ic_header_light_expanded"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/search_card_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="32dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/white">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/icon_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_baseline_search_24" />
+
+                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@android:color/white">
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/search_books_authors"
+                    android:maxLines="1" />
 
-                    <ImageView
-                        android:id="@+id/icon_search"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/ic_baseline_search_24" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@android:color/transparent"
-                        android:hint="@string/search_books_authors"
-                        android:maxLines="1" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/navigation"
+            app:layout_constraintTop_toBottomOf="@id/search_card_view" />
 
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/search_card_view"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp"
-                android:textColor="@android:color/white"
-                android:text="@string/our_top_picks"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/navigation_items" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
