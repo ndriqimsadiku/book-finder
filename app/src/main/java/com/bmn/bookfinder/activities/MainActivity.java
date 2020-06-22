@@ -1,6 +1,7 @@
 package com.bmn.bookfinder.activities;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.databinding.ActivityMainBinding;
+import com.bmn.bookfinder.utils.DimenUtils;
 
 import java.util.Objects;
 
@@ -19,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
+        );
+
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

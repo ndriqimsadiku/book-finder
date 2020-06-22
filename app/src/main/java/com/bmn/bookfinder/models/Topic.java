@@ -1,14 +1,20 @@
 package com.bmn.bookfinder.models;
 
-import android.graphics.drawable.Drawable;
-
 public class Topic {
+    public long id;
+    public int backgroundColor;
     private String text;
     private int image;
 
     public Topic(String text, int image) {
         this.text = text;
         this.image = image;
+    }
+
+    public Topic(String text, int image, int backgroundColor) {
+        this.text = text;
+        this.image = image;
+        this.backgroundColor = backgroundColor;
     }
 
     public String getText() {

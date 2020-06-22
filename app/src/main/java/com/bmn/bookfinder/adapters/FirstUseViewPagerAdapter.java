@@ -26,7 +26,6 @@ public class FirstUseViewPagerAdapter extends PagerAdapter {
     @NotNull
     @Override
     public Object instantiateItem(@NotNull ViewGroup container, int position) {
-
         View view = layoutInflater.inflate(layouts[position], container, false);
         container.addView(view);
         return view;
