@@ -1,14 +1,16 @@
 package com.bmn.bookfinder.activities;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.databinding.ActivityMainBinding;
+
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,11 +20,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         initData();
     }
 
     private void initData() {
-
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(binding.navigation, Objects.requireNonNull(navHostFragment).getNavController()
+        );
     }
 }
