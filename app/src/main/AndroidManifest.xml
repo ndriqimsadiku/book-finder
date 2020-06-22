@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.ChooseTopicsActivity"/>
-        <activity android:name=".activities.FirstUserSliderActivity" />
+        <activity android:name=".activities.FirstUserSliderActivity"
+            android:theme="@style/IntroTheme"/>
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

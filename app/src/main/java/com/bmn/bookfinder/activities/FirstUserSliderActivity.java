@@ -3,6 +3,7 @@ package com.bmn.bookfinder.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.FirstUseViewPagerAdapter;
 import com.bmn.bookfinder.databinding.ActivityFirstUserSliderBinding;
+import com.bmn.bookfinder.utils.DimenUtils;
 
 public class FirstUserSliderActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
@@ -19,6 +21,11 @@ public class FirstUserSliderActivity extends AppCompatActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.IntroTheme);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_first_user_slider);
         initData();
@@ -30,6 +37,7 @@ public class FirstUserSliderActivity extends AppCompatActivity implements View.O
         binding.firstUseViewPager.setAdapter(new FirstUseViewPagerAdapter(getApplicationContext()));
         binding.firstUseViewPager.addOnPageChangeListener(this);
         binding.firstUseSliderIndicator.setViewPager(binding.firstUseViewPager);
+        DimenUtils.setTopBottomPadding(binding.getRoot());
     }
 
 

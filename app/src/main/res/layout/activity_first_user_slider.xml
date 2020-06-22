@@ -41,21 +41,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/get_started_button"
+            style="@style/buttonStyle"
+            android:text="@string/get_started"
+            android:elevation="@dimen/space_normal"
+            android:translationZ="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
             android:alpha="0"
-            android:background="@color/colorPrimary"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/get_started"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/space_extra_large" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

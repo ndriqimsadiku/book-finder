@@ -12,13 +12,14 @@ import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.ChooseTopicsLayoutAdapter;
 import com.bmn.bookfinder.databinding.ActivityChooseTopicsBinding;
 import com.bmn.bookfinder.models.Topic;
+import com.bmn.bookfinder.utils.DimenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseTopicsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ActivityChooseTopicsBinding binding;
+   private ActivityChooseTopicsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class ChooseTopicsActivity extends AppCompatActivity implements View.OnCl
         binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_topics);
         binding.topicsGrid.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
 
+        DimenUtils.setTopBottomPadding(binding.getRoot());
         List<Topic> topics = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
             topics.add(new Topic("Topic", R.drawable.history_topic));
