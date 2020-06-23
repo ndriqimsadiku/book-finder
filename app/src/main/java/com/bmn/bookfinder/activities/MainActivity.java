@@ -9,10 +9,18 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bmn.bookfinder.R;
+import com.bmn.bookfinder.data.network.remote.ApiUtils;
 import com.bmn.bookfinder.databinding.ActivityMainBinding;
-import com.bmn.bookfinder.utils.DimenUtils;
+import com.bmn.bookfinder.helpers.Constants;
+import com.bmn.bookfinder.models.NYTimesResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +38,21 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initData();
+
+        ApiUtils.getNYTimesApiService(getApplicationContext()).getBestSellers(
+                Constants.NYTimes.HARDCOVER_FICTION,
+                Constants.NYTimes.NY_API_KEY
+        ).enqueue(new Callback<NYTimesResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<NYTimesResponse> call, @NotNull Response<NYTimesResponse> response) {
+                System.out.println(response.body());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<NYTimesResponse> call, @NotNull Throwable t) {
+                System.out.println(t.toString());
+            }
+        });
     }
 
     private void initData() {
