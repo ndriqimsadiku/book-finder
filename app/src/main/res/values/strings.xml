@@ -20,4 +20,5 @@
     <string name="discover">Discover</string>
     <string name="favorites">Favorites</string>
     <string name="profile">Profile</string>
+    <string name="recently_viewed">Recently Viewed</string>
 </resources>
