@@ -1,18 +1,19 @@
 package com.bmn.bookfinder.fragments;
 
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import com.bmn.bookfinder.R;
+import com.bmn.bookfinder.adapters.BestShareListAdapter;
 import com.bmn.bookfinder.adapters.TopPicksAdapter;
 import com.bmn.bookfinder.adapters.TopicsAdapter;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
+import com.bmn.bookfinder.models.BestShareModel;
 import com.bmn.bookfinder.models.Topic;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class DiscoverFragment extends Fragment {
 
     private void initData() {
         List<Topic> topics = new ArrayList<>();
+        List<BestShareModel> bestShareModels = new ArrayList<>();
         topics.add(new Topic("Add", R.drawable.first_image_topics_list));
         for (int i = 0; i < 40; i++) {
             topics.add(new Topic("Topic", R.drawable.history_topic));
@@ -67,5 +69,12 @@ public class DiscoverFragment extends Fragment {
                 getContext(), topics
         );
         binding.topPicksRv.setAdapter(topPicksAdapter);
+
+        for (int i = 0; i < 20; i++) {
+            bestShareModels.add(new BestShareModel("Title", R.drawable.fatherhood, "Authot"));
+        }
+        BestShareListAdapter bestShareListAdapter = new BestShareListAdapter(getContext(), bestShareModels);
+        binding.bestShareRv.setAdapter(bestShareListAdapter);
+        binding.recentleViewedRv.setAdapter(bestShareListAdapter);
     }
 }
