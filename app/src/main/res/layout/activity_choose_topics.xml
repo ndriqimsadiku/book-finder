@@ -9,6 +9,7 @@
         android:paddingBottom="16dp"
         tools:context=".activities.ChooseTopicsActivity">
 
+        <include layout="@layout/background_profile_images"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/topics_grid"
@@ -16,24 +17,14 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:horizontalSpacing="16dp"
-            android:paddingTop="120dp"
-            app:spanCount="3"
-            tools:itemCount="25"
+            android:paddingTop="150dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/apply_topics_button"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:spanCount="3"
+            tools:itemCount="25"
             tools:listitem="@layout/topics_grid_item" />
-
-        <ImageView
-            android:id="@+id/header_dark"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_header_dark"
-            android:translationY="-180dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,17 +37,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_topics_button"
+            style="@style/buttonStyle"
+            android:text="@string/apply"
+            android:elevation="@dimen/space_normal"
+            android:translationZ="20dp"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginHorizontal="16dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/apply"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

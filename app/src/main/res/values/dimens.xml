@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="favorite_card_radius">15sp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="search_card_radius">20dp</dimen>
+    <dimen name="topic_text_size">16sp</dimen>
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_extra_large">32dp</dimen>
+</resources>
