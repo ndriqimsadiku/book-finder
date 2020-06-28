@@ -20,7 +20,7 @@ public class Constants {
     }
 
     public static class Google {
-        public static final String NY_API_KEY = "AIzaSyCaC8Zm07i63NpDtxQynufOPdX3-40tAyA";
+        public static final String API_KEY = "AIzaSyCaC8Zm07i63NpDtxQynufOPdX3-40tAyA";
         public static final String BASE_URL = "https://www.googleapis.com/books/v1/";
     }
 }
