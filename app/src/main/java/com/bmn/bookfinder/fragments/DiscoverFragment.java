@@ -12,19 +12,22 @@ import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.BestShareListAdapter;
 import com.bmn.bookfinder.adapters.TopPicksAdapter;
 import com.bmn.bookfinder.adapters.TopicsAdapter;
+import com.bmn.bookfinder.data.network.remote.ApiFunctions;
+import com.bmn.bookfinder.data.network.remote.ApiInterfaces;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
+import com.bmn.bookfinder.models.ApiResponse;
 import com.bmn.bookfinder.models.BestShareModel;
+import com.bmn.bookfinder.models.TopPick;
 import com.bmn.bookfinder.models.Topic;
+import com.bmn.bookfinder.models.googlebooks.GBResponse;
+import com.bmn.bookfinder.models.googlebooks.ResponseItem;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DiscoverFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DiscoverFragment extends Fragment {
+public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiResponse {
 
     FragmentDiscoverBinding binding;
 
@@ -42,7 +45,7 @@ public class DiscoverFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover, container, false);
         initData();
@@ -50,6 +53,9 @@ public class DiscoverFragment extends Fragment {
     }
 
     private void initData() {
+        ApiFunctions apiFunctions = new ApiFunctions();
+        apiFunctions.setApiGenresResponseListener(this);
+        apiFunctions.getBooksBySubject(getContext(), "History");
         List<Topic> topics = new ArrayList<>();
         List<BestShareModel> bestShareModels = new ArrayList<>();
         topics.add(new Topic("Add", R.drawable.first_image_topics_list));
@@ -65,16 +71,31 @@ public class DiscoverFragment extends Fragment {
         for (int i = 0; i < 10; i++) {
             topics.add(new Topic("Lorem ipsum", R.drawable.fatherhood));
         }
-        TopPicksAdapter topPicksAdapter = new TopPicksAdapter(
-                getContext(), topics
-        );
-        binding.topPicksRv.setAdapter(topPicksAdapter);
 
         for (int i = 0; i < 20; i++) {
-            bestShareModels.add(new BestShareModel("Title", R.drawable.fatherhood, "Authot"));
+            bestShareModels.add(new BestShareModel("Title", R.drawable.fatherhood, "Author"));
         }
         BestShareListAdapter bestShareListAdapter = new BestShareListAdapter(getContext(), bestShareModels);
         binding.bestShareRv.setAdapter(bestShareListAdapter);
         binding.recentleViewedRv.setAdapter(bestShareListAdapter);
+    }
+
+    @Override
+    public void onApiResponse(boolean status, ApiResponse apiResponse, String message) {
+        if (apiResponse instanceof GBResponse) {
+            GBResponse gbResponse = (GBResponse) apiResponse;
+            List<TopPick> topics = new ArrayList<>();
+            for (ResponseItem responseItem : gbResponse.getItems()) {
+
+                topics.add(new TopPick(
+                        responseItem.getVolumeInfo().getTitle(),
+                        responseItem.getVolumeInfo().getImageLinks().getThumbnail()));
+
+                TopPicksAdapter topPicksAdapter = new TopPicksAdapter(
+                        getContext(), topics
+                );
+                binding.topPicksRv.setAdapter(topPicksAdapter);
+            }
+        }
     }
 }
