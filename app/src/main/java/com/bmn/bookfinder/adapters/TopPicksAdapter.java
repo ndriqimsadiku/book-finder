@@ -11,21 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bmn.bookfinder.R;
-import com.bmn.bookfinder.models.Topic;
-import com.google.android.material.card.MaterialCardView;
+import com.bmn.bookfinder.models.TopPick;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHolder> {
 
-    private List<Topic> topics;
+    private List<TopPick> topPicks;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context;
 
     // data is passed into the constructor
-    public TopPicksAdapter(Context context, List<Topic> topics) {
+    public TopPicksAdapter(Context context, List<TopPick> topPicks) {
+        this.context = context;
         this.mInflater = LayoutInflater.from(context);
-        this.topics = topics;
+        this.topPicks = topPicks;
     }
 
     @Override
@@ -37,13 +39,17 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.text.setText(topics.get(position).getText());
-        holder.image.setImageResource(topics.get(position).getImage());
+        holder.text.setText(topPicks.get(position).getTitle());
+        //holder.image.setImageResource(topics.get(position).getImage());
+        //Glide.with(get).load("http://goo.gl/gEgYUd").into(imageView);
+        Glide.with(context)
+                .load(topPicks.get(position).getImageUrl())
+                .into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return topics.size();
+        return topPicks.size();
     }
 
     void setClickListener(ItemClickListener itemClickListener) {
@@ -59,11 +65,9 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView text;
         ImageView image;
-        MaterialCardView materialCardView;
 
         ViewHolder(View itemView) {
             super(itemView);
-            materialCardView = itemView.findViewById(R.id.top_picks_card);
             text = itemView.findViewById(R.id.top_picks_text);
             image = itemView.findViewById(R.id.top_picks_image);
             itemView.setOnClickListener(this);
