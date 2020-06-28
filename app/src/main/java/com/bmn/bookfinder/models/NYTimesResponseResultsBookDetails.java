@@ -2,23 +2,6 @@ package com.bmn.bookfinder.models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * "book_details": [
- * *         {
- * *           "title": "A GIRL'S GUIDE TO MOVING ON",
- * *           "description": "A mother and her daughter-in-law both leave unhappy marriages and take up with new men.",
- * *           "contributor": "by Debbie Macomber",
- * *           "author": "Debbie Macomber",
- * *           "contributor_note": "",
- * *           "price": 0,
- * *           "age_group": "",
- * *           "publisher": "Ballantine",
- * *           "primary_isbn13": "9780553391923",
- * *           "primary_isbn10": "0553391925"
- * *         }
- * *       ],
- */
-
 public class NYTimesResponseResultsBookDetails {
 
     private String title;
