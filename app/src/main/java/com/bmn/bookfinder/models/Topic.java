@@ -1,8 +1,9 @@
 package com.bmn.bookfinder.models;
 
 public class Topic {
-    public long id;
+    public Integer id;
     public int backgroundColor;
+    public String thumbnailUrl;
     private String text;
     private int image;
 
@@ -15,6 +16,11 @@ public class Topic {
         this.text = text;
         this.image = image;
         this.backgroundColor = backgroundColor;
+    }
+
+    public Topic(String text, String thumbnailUrl) {
+        this.text = text;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getText() {
