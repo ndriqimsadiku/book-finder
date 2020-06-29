@@ -18,7 +18,8 @@ public class Topic {
         this.backgroundColor = backgroundColor;
     }
 
-    public Topic(String text, String thumbnailUrl) {
+    public Topic(Integer id, String text, String thumbnailUrl) {
+        this.id = id;
         this.text = text;
         this.thumbnailUrl = thumbnailUrl;
     }
