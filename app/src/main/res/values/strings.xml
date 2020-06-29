@@ -24,4 +24,6 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="night_mode">Night Mode</string>
     <string name="notifications">Notifications</string>
+    <string name="topics">Topics</string>
+    <string name="please_choose_topics">Please choose one or more topics from the list!</string>
 </resources>
