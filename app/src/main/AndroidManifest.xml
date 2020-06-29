@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.ChooseTopicsActivity" />
         <activity
-            android:name=".activities.FirstUserSliderActivity"
+            android:name=".activities.FirstUseSliderActivity"
             android:theme="@style/IntroTheme" />
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>

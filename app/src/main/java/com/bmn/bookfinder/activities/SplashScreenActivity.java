@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bmn.bookfinder.R;
+import com.bmn.bookfinder.helpers.SharedPrefUtils;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -19,6 +20,10 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        startActivity(new Intent(this, FirstUserSliderActivity.class));
+        if (SharedPrefUtils.loadFirstTimeUsedTimestamp(getApplicationContext()) != 0L) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        } else {
+            startActivity(new Intent(getApplicationContext(), FirstUseSliderActivity.class));
+        }
     }
 }
