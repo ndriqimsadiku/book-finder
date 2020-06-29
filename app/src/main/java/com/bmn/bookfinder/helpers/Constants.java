@@ -23,4 +23,11 @@ public class Constants {
         public static final String API_KEY = "AIzaSyCaC8Zm07i63NpDtxQynufOPdX3-40tAyA";
         public static final String BASE_URL = "https://www.googleapis.com/books/v1/";
     }
+
+    public static class SharedPrefs {
+        public static final String FIRST_TIME_USED = "com.bmn.bookfinder.FIRST_TIME_USED";
+        public static final String FIRST_TIME_USED_VALUE = "com.bmn.bookfinder.FIRST_TIME_USED_VALUE";
+
+
+    }
 }
