@@ -24,6 +24,10 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="night_mode">Night Mode</string>
     <string name="notifications">Notifications</string>
+    <string name="topics">Topics</string>
+    <string name="please_choose_topics">Please choose one or more topics from the list!</string>
+    <string name="preparing_your_app_for_best_experience">Preparing your app for best experience!</string>
+    <string name="internet_connection_message">Please connect to the internet and try again!</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>

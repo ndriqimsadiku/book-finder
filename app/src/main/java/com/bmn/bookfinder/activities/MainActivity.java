@@ -10,6 +10,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.databinding.ActivityMainBinding;
+import com.bmn.bookfinder.utils.DimenUtils;
 
 import java.util.Objects;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initData();
+        DimenUtils.setTopPadding(binding.getRoot());
 
     }
 

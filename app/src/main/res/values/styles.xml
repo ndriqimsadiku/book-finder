@@ -17,6 +17,7 @@
     <style name="HomeTheme" parent="AppTheme">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">#ff91b7</item>
+        <item name="android:screenOrientation">locked</item>
     </style>
 
     <style name="buttonStyle">

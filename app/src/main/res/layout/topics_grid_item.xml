@@ -3,28 +3,58 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:id="@+id/item_topic_container"
         android:layout_height="150dp">
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/topics_item_image"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/history_topic"
+            app:layout_constraintBottom_toTopOf="@id/topics_item_text"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/topics_item_text"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/topic_checked"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/history_topic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/topics_item_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="#80000000" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_tick" />
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/topics_item_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Topics"
-            android:textSize="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintLeft_toLeftOf="@id/topics_item_image"
-            app:layout_constraintRight_toRightOf="@id/topics_item_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="@string/topics"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/topics_item_image"
+            app:layout_constraintRight_toRightOf="@id/topics_item_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

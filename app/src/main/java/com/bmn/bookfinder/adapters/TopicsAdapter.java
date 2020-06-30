@@ -5,13 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bmn.bookfinder.R;
+import com.bmn.bookfinder.helpers.SharedPrefUtils;
 import com.bmn.bookfinder.models.Topic;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -36,8 +40,18 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.text.setText(topics.get(position).getText());
-        holder.image.setImageResource(topics.get(position).getImage());
+        Topic currentTopic = topics.get(position);
+        String thumbnailUrl = currentTopic.thumbnailUrl;
+
+        holder.text.setText(currentTopic.getText());
+        holder.constraintLayout.setOnClickListener(view -> {
+            holder.checkedLayer.setVisibility(holder.checkedLayer.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+
+        });
+
+        if (thumbnailUrl != null && !thumbnailUrl.isEmpty()) {
+            Glide.with(holder.text.getContext()).load(thumbnailUrl).into(holder.image);
+        }
     }
 
     @Override
@@ -56,13 +70,17 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView text;
-        ImageView image;
+        private TextView text;
+        private ImageView image;
+        private ConstraintLayout constraintLayout;
+        private RelativeLayout checkedLayer;
 
         ViewHolder(View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.topics_list_text);
             image = itemView.findViewById(R.id.topics_list_image);
+            constraintLayout = itemView.findViewById(R.id.item_topic_container);
+            checkedLayer = itemView.findViewById(R.id.topic_checked);
             itemView.setOnClickListener(this);
         }
 
