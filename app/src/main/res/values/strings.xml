@@ -41,6 +41,6 @@
     <string name="confirm_password_is_required">Confirm password is required</string>
     <string name="passwords_do_not_match">Passwords to not match</string>
     <string name="cannot_create_account_without_terms_conditions">Cannot create account without accepting terms and conditions</string>
-    <string name="do_view_your_profile_sign_in_or_sign_up_if_you_do_not_have_an_account">Do view your profile sign in or sign up if you do not have an account</string>
+    <string name="do_view_your_profile_sign_in_or_sign_up_if_you_do_not_have_an_account">Login or Sign up</string>
     <string name="log_out">Log out</string>
 </resources>
