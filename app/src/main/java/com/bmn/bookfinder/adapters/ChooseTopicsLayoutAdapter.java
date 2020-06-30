@@ -5,13 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bmn.bookfinder.R;
+import com.bmn.bookfinder.helpers.SharedPrefUtils;
 import com.bmn.bookfinder.models.Topic;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -38,8 +42,26 @@ public class ChooseTopicsLayoutAdapter extends RecyclerView.Adapter<ChooseTopics
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.text.setText(topics.get(position).getText());
-        holder.image.setImageResource(topics.get(position).getImage());
+        Topic currentTopic = topics.get(position);
+        Context context = holder.itemView.getContext();
+
+        String thumbnailUrl = currentTopic.thumbnailUrl;
+        holder.text.setText(currentTopic.getText());
+        holder.checkedLayer.setVisibility(SharedPrefUtils.getFavoriteIds(context).contains(currentTopic) ? View.VISIBLE : View.GONE);
+
+        holder.constraintLayout.setOnClickListener(view -> {
+            if (holder.checkedLayer.getVisibility() == View.VISIBLE) {
+                SharedPrefUtils.removeFavoriteId(context, currentTopic.id);
+            } else {
+                SharedPrefUtils.addFavoriteId(context, currentTopic.id);
+            }
+            holder.checkedLayer.setVisibility(holder.checkedLayer.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+
+        });
+
+        if (thumbnailUrl != null && !thumbnailUrl.isEmpty()) {
+            Glide.with(context).load(thumbnailUrl).into(holder.image);
+        }
     }
 
     // total number of cells
@@ -60,13 +82,18 @@ public class ChooseTopicsLayoutAdapter extends RecyclerView.Adapter<ChooseTopics
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView text;
-        ImageView image;
+        private TextView text;
+        private ImageView image;
+        private ConstraintLayout constraintLayout;
+        private RelativeLayout checkedLayer;
 
         ViewHolder(View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.topics_item_text);
             image = itemView.findViewById(R.id.topics_item_image);
+            constraintLayout = itemView.findViewById(R.id.item_topic_container);
+            checkedLayer = itemView.findViewById(R.id.topic_checked);
+
             itemView.setOnClickListener(this);
         }
 

@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.FirstUseViewPagerAdapter;
 import com.bmn.bookfinder.databinding.ActivityFirstUserSliderBinding;
-import com.bmn.bookfinder.helpers.SharedPrefUtils;
 import com.bmn.bookfinder.utils.DimenUtils;
 
 public class FirstUseSliderActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
@@ -30,7 +29,6 @@ public class FirstUseSliderActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_first_user_slider);
         initData();
-        SharedPrefUtils.storeFirstTimeUsedTimestamp(getApplicationContext(), System.currentTimeMillis());
     }
 
     private void initData() {

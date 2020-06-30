@@ -27,7 +27,7 @@ public class Constants {
     public static class SharedPrefs {
         public static final String FIRST_TIME_USED = "com.bmn.bookfinder.FIRST_TIME_USED";
         public static final String FIRST_TIME_USED_VALUE = "com.bmn.bookfinder.FIRST_TIME_USED_VALUE";
-
-
+        public static final String SELECTED_TOPICS_VALUE = "com.bmn.bookfinder.SELECTED_TOPICS_VALUE";
+        public static final String SELECTED_TOPICS = "com.bmn.bookfinder.SELECTED_TOPICS";
     }
 }

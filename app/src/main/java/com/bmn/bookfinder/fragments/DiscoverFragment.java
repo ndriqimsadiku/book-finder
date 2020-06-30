@@ -15,6 +15,8 @@ import com.bmn.bookfinder.adapters.TopicsAdapter;
 import com.bmn.bookfinder.data.network.remote.ApiFunctions;
 import com.bmn.bookfinder.data.network.remote.ApiInterfaces;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
+import com.bmn.bookfinder.dummydata.DummyData;
+import com.bmn.bookfinder.helpers.SharedPrefUtils;
 import com.bmn.bookfinder.models.ApiResponse;
 import com.bmn.bookfinder.models.BestShareModel;
 import com.bmn.bookfinder.models.TopPick;
@@ -56,21 +58,13 @@ public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiRes
         ApiFunctions apiFunctions = new ApiFunctions();
         apiFunctions.setApiGenresResponseListener(this);
         apiFunctions.getBooksBySubject(getContext(), "History");
-        List<Topic> topics = new ArrayList<>();
+
         List<BestShareModel> bestShareModels = new ArrayList<>();
-        topics.add(new Topic("Add", R.drawable.first_image_topics_list));
-        for (int i = 0; i < 40; i++) {
-            topics.add(new Topic("Topic", R.drawable.history_topic));
-        }
+
         TopicsAdapter topicsAdapter = new TopicsAdapter(
-                getContext(), topics
+                getContext(), getSelectedTopics()
         );
         binding.topicsRv.setAdapter(topicsAdapter);
-
-        topics.clear();
-        for (int i = 0; i < 10; i++) {
-            topics.add(new Topic("Lorem ipsum", R.drawable.fatherhood));
-        }
 
         for (int i = 0; i < 20; i++) {
             bestShareModels.add(new BestShareModel("Title", R.drawable.fatherhood, "Author"));
@@ -78,6 +72,18 @@ public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiRes
         BestShareListAdapter bestShareListAdapter = new BestShareListAdapter(getContext(), bestShareModels);
         binding.bestShareRv.setAdapter(bestShareListAdapter);
         binding.recentleViewedRv.setAdapter(bestShareListAdapter);
+    }
+
+    private ArrayList<Topic> getSelectedTopics() {
+        ArrayList<Topic> allTopics = DummyData.getFirstUseTopics();
+        ArrayList<Topic> selectedTopics = new ArrayList<>();
+        ArrayList<Integer> ids = SharedPrefUtils.getFavoriteIds(getContext());
+        for (Topic topic : allTopics) {
+            if (ids.contains(topic.id)) {
+                selectedTopics.add(topic);
+            }
+        }
+        return selectedTopics;
     }
 
     @Override

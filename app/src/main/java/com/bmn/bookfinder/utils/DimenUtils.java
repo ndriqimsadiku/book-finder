@@ -2,6 +2,7 @@ package com.bmn.bookfinder.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 /**
@@ -48,5 +49,11 @@ public class DimenUtils {
 
     public static void setBottomPadding(View view) {
         view.setPadding(0, 0, 0, getNavigationBarHeight(view.getContext()));
+    }
+
+    public static int convertDpToPixel(float dp) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return Math.round(px);
     }
 }
