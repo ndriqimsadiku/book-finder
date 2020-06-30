@@ -28,4 +28,23 @@
     <string name="please_choose_topics">Please choose one or more topics from the list!</string>
     <string name="preparing_your_app_for_best_experience">Preparing your app for best experience!</string>
     <string name="internet_connection_message">Please connect to the internet and try again!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="by_checking_this_i_agree_to_terms_and_conditions_and_privacy_policy">By checking this I agree to terms and conditions and privacy policy</string>
+    <string name="logging_in">Logging in</string>
+    <string name="authorization_failed">Authorization failed</string>
+    <string name="invalid_email_address">Invalid email address</string>
+    <string name="email_is_required">email is required</string>
+    <string name="password_is_required">password_is_required</string>
+    <string name="your_password_must_be_6_long">Password must be 6 characters or longer</string>
+    <string name="signing_up">Signin up...</string>
+    <string name="account_created_successfully">Account created successfully</string>
+    <string name="account_creation_failed">Account creation failed</string>
+    <string name="confirm_password_is_required">Confirm password is required</string>
+    <string name="passwords_do_not_match">Passwords to not match</string>
+    <string name="cannot_create_account_without_terms_conditions">Cannot create account without accepting terms and conditions</string>
+    <string name="do_view_your_profile_sign_in_or_sign_up_if_you_do_not_have_an_account">Login or Sign up</string>
+    <string name="log_out">Log out</string>
 </resources>
