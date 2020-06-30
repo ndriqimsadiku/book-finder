@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.AccountActivity"></activity>
         <activity android:name=".activities.ChooseTopicsActivity" />
         <activity
             android:name=".activities.FirstUseSliderActivity"
@@ -27,7 +28,6 @@
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/HomeTheme" />
-
     </application>
 
 </manifest>
