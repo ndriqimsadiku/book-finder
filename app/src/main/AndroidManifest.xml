@@ -14,6 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <activity android:name=".activities.BookActivity"></activity>
+        <activity android:name=".activities.AccountActivity" />
+        <activity android:name=".activities.ChooseTopicsActivity" />
+
         <activity
             android:name=".activities.ChooseTopicsActivity"
             android:theme="@style/HomeTheme" />
