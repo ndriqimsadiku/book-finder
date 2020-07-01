@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.bmn.bookfinder.adapters.TopicBooksAdapter;
 import com.bmn.bookfinder.data.room.AppDatabase;
+import com.bmn.bookfinder.data.room.BookEntity;
 import com.bmn.bookfinder.databinding.FragmentTopicBinding;
+
+import java.util.List;
 
 /**
  * Created by Ndriçim Sadiku on 01 July 2020
@@ -30,8 +33,11 @@ public class TopicFragment extends Fragment {
 
         binding.back.setOnClickListener(view -> getActivity().onBackPressed());
 
+        List<BookEntity> list = AppDatabase.getDatabase(getContext()).getBookDao().getBookByTopicId(args.getTopicId());
         TopicBooksAdapter booksAdapter = new TopicBooksAdapter(getContext());
-        booksAdapter.setBooks(AppDatabase.getDatabase(getContext()).getBookDao().getBookByTopicId(args.getTopicId()));
+        booksAdapter.setBooks(list);
+
+        binding.listEmptyMessage.setVisibility((list != null && !list.isEmpty()) ? View.VISIBLE : View.GONE);
 
         binding.bookList.setAdapter(booksAdapter);
         return binding.getRoot();
