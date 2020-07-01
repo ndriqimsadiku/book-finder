@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.bmn.bookfinder.fragments.DiscoverFragment"
-        android:label="DiscoverFragment" >
+        android:label="DiscoverFragment">
         <action
             android:id="@+id/action_discoverFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
@@ -17,14 +17,34 @@
         android:id="@+id/favoritesFragment"
         android:name="com.bmn.bookfinder.fragments.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_topicFragment"
+            app:destination="@id/topicFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.bmn.bookfinder.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/topicFragment"
+        android:name="com.bmn.bookfinder.fragments.TopicFragment"
+        android:label="TopicFragment"
+        tools:layout="@layout/fragment_topic">
+
+        <argument
+            android:name="topicId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
+        <argument
+            android:name="topicTitle"
+            android:defaultValue=""
+            app:argType="string" />
+
+    </fragment>
 </navigation>
