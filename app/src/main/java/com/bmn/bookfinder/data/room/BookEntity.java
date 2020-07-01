@@ -22,6 +22,8 @@ public class BookEntity {
     @ColumnInfo
     private long topicId;
     @ColumnInfo
+    private String topic;
+    @ColumnInfo
     private String title;
     @ColumnInfo
     private String description;
@@ -38,10 +40,10 @@ public class BookEntity {
     private String publishedDate;
     @ColumnInfo
     private boolean isFavorite;
-
-    public BookEntity(String id, long topicId, String title, String description, String thumbnailUrl, List<String> authors, double averageRating, int pageCount, String publishedDate, boolean isFavorite) {
+    public BookEntity(String id, long topicId, String topic, String title, String description, String thumbnailUrl, List<String> authors, double averageRating, int pageCount, String publishedDate, boolean isFavorite) {
         this.id = id;
         this.topicId = topicId;
+        this.topic = topic;
         this.title = title;
         this.description = description;
         this.thumbnailUrl = thumbnailUrl;
@@ -50,6 +52,14 @@ public class BookEntity {
         this.pageCount = pageCount;
         this.publishedDate = publishedDate;
         this.isFavorite = isFavorite;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public String getId() {

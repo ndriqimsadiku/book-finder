@@ -108,7 +108,9 @@ public class ChooseTopicsActivity extends AppCompatActivity implements View.OnCl
             GBResponse gbResponse = (GBResponse) apiResponse;
             if (gbResponse != null) {
                 for (ResponseItem item : gbResponse.getItems()) {
-                    bookEntities.add(getBookFromNetwork(item));
+                    if (item.getVolumeInfo().getImageLinks() != null) {
+                        bookEntities.add(getBookFromNetwork(item));
+                    }
                 }
                 DatabaseAsync databaseAsync = new DatabaseAsync(appDatabase.getBookDao(), success -> {
                     currentIndex++;
@@ -139,6 +141,7 @@ public class ChooseTopicsActivity extends AppCompatActivity implements View.OnCl
         return new BookEntity(
                 item.getId(),
                 selectedTopics.get(currentIndex).id,
+                selectedTopics.get(currentIndex).getText(),
                 info.getTitle(),
                 info.getDescription(),
                 info.getImageLinks().getThumbnail(),
