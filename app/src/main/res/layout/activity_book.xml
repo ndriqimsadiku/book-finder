@@ -33,15 +33,26 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/book_image"
-                android:layout_width="100dp"
-                android:layout_height="200dp"
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/book_image_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/fatherhood"
+                android:elevation="8dp"
+                app:cardCornerRadius="15dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/book_title" />
+                app:layout_constraintTop_toBottomOf="@id/book_title">
+
+                <ImageView
+                    android:id="@+id/book_image"
+                    android:layout_width="100dp"
+                    android:layout_height="180dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fatherhood" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <RatingBar
                 android:id="@+id/book_rating"
@@ -52,7 +63,7 @@
                 android:scaleY="0.7"
                 android:translationX="-30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/book_image" />
+                app:layout_constraintTop_toBottomOf="@id/book_image_card" />
 
             <ImageView
                 android:id="@+id/favorite_book"
