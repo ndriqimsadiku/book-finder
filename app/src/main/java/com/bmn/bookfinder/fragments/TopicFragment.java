@@ -9,15 +9,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bmn.bookfinder.adapters.TopicBooksAdapter;
+import com.bmn.bookfinder.data.room.AppDatabase;
+import com.bmn.bookfinder.databinding.FragmentTopicBinding;
+
 /**
  * Created by Ndriçim Sadiku on 01 July 2020
  * ndricim@frakton.com
  */
-class TopicFragment extends Fragment {
+public class TopicFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        FragmentTopicBinding binding = FragmentTopicBinding.inflate(getLayoutInflater());
+
+        TopicFragmentArgs args = TopicFragmentArgs.fromBundle(getArguments());
+
+        binding.topicTitle.setText(args.getTopicTitle());
+
+        binding.back.setOnClickListener(view -> getActivity().onBackPressed());
+
+        TopicBooksAdapter booksAdapter = new TopicBooksAdapter(getContext());
+        booksAdapter.setBooks(AppDatabase.getDatabase(getContext()).getBookDao().getBookByTopicId(args.getTopicId()));
+
+        binding.bookList.setAdapter(booksAdapter);
+        return binding.getRoot();
     }
+
 }
