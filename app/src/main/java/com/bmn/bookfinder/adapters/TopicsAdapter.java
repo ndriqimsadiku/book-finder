@@ -13,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bmn.bookfinder.R;
-import com.bmn.bookfinder.helpers.SharedPrefUtils;
 import com.bmn.bookfinder.models.Topic;
 import com.bumptech.glide.Glide;
 
@@ -23,9 +22,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
     private List<Topic> topics;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private ItemTopicsClickListener mClickListener;
 
-    // data is passed into the constructor
     public TopicsAdapter(Context context, List<Topic> topics) {
         this.mInflater = LayoutInflater.from(context);
         this.topics = topics;
@@ -59,16 +57,14 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         return topics.size();
     }
 
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+    void setClickListener(ItemTopicsClickListener itemTopicsClickListener) {
+        this.mClickListener = itemTopicsClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
+    public interface ItemTopicsClickListener {
+        void onItemTopicsClick(View view, int position);
     }
 
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView text;
         private ImageView image;
@@ -86,7 +82,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null)
+                mClickListener.onItemTopicsClick(view, getAdapterPosition());
         }
     }
 }

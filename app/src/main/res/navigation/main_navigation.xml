@@ -8,16 +8,19 @@
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.bmn.bookfinder.fragments.DiscoverFragment"
-        android:label="DiscoverFragment" >
+        android:label="DiscoverFragment">
         <action
             android:id="@+id/action_discoverFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_bookActivity"
+            app:destination="@id/bookActivity" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.bmn.bookfinder.fragments.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -27,4 +30,13 @@
         android:name="com.bmn.bookfinder.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <activity
+        android:id="@+id/bookActivity"
+        android:name="com.bmn.bookfinder.activities.BookActivity"
+        android:label="BookActivity">
+        <argument
+            android:name="bookId"
+            android:defaultValue=""
+            app:argType="string" />
+    </activity>
 </navigation>
