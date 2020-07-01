@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bmn.bookfinder.adapters.FavoriteTopicsAdapter;
+import com.bmn.bookfinder.data.room.AppDatabase;
 import com.bmn.bookfinder.databinding.FragmentFavoritesBinding;
 import com.bmn.bookfinder.dummydata.DummyData;
 import com.bmn.bookfinder.models.Topic;
@@ -29,11 +31,15 @@ public class FavoritesFragment extends Fragment {
         init();
 
         topics = DummyData.getDummyTopics();
+        FavoritesFragmentDirections.ActionFavoritesFragmentToTopicFragment action = FavoritesFragmentDirections.actionFavoritesFragmentToTopicFragment();
 
-        FavoriteTopicsAdapter adapter = new FavoriteTopicsAdapter(topic -> {
-            //todo open activity for books of clicked topic
+        FavoriteTopicsAdapter adapter = new FavoriteTopicsAdapter(book -> {
+            action.setTopicId((int)book.getTopicId());
+            action.setTopicTitle(book.getTopic());
+            Navigation.findNavController(binding.getRoot()).navigate(action);
         });
-        adapter.submitList(topics);
+
+        adapter.submitList(AppDatabase.getDatabase(getContext()).getBookDao().getFavoriteTopics());
         binding.favoritesList.setAdapter(adapter);
 
         return binding.getRoot();

@@ -5,11 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bmn.bookfinder.R
+import com.bmn.bookfinder.data.room.BookEntity
 import com.bmn.bookfinder.databinding.ItemFavoriteTopicBinding
 import com.bmn.bookfinder.models.Topic
 
+private val listOfColors = arrayOf(
+    R.color.card_blue_color,
+    R.color.card_purple_color,
+    R.color.card_green_color,
+    R.color.card_pink_color,
+    R.color.card_blue_to_purple_color,
+    R.color.card_dark_yellow_color
+)
+
 class FavoriteTopicsAdapter(val onClickListener: OnClickListener) :
-    ListAdapter<Topic, FavoriteTopicsAdapter.FavoriteTopicViewHolder>(DiffCallback) {
+    ListAdapter<BookEntity, FavoriteTopicsAdapter.FavoriteTopicViewHolder>(DiffCallback) {
+
+    var colorPos = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteTopicViewHolder {
         return FavoriteTopicViewHolder(
@@ -22,31 +35,34 @@ class FavoriteTopicsAdapter(val onClickListener: OnClickListener) :
     }
 
     override fun onBindViewHolder(holder: FavoriteTopicViewHolder, position: Int) {
-        val story = getItem(position)
+        val book = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(story)
+            onClickListener.onClick(book)
         }
-        holder.bind(story)
+        holder.bind(book, colorPos++)
+        if (colorPos == listOfColors.size - 1) {
+            colorPos = 0
+        }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Topic>() {
-        override fun areItemsTheSame(oldItem: Topic, newItem: Topic): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<BookEntity>() {
+        override fun areItemsTheSame(oldItem: BookEntity, newItem: BookEntity): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Topic, newItem: Topic): Boolean {
+        override fun areContentsTheSame(oldItem: BookEntity, newItem: BookEntity): Boolean {
             return oldItem.id == newItem.id
         }
     }
 
     class FavoriteTopicViewHolder(private var binding: ItemFavoriteTopicBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(topic: Topic) {
-            binding.topic = topic
+        fun bind(book: BookEntity, pos: Int) {
+            binding.topic = Topic(book.thumbnailUrl, book.topic, listOfColors[pos])
         }
     }
 
     interface OnClickListener {
-        fun onClick(topic: Topic)
+        fun onClick(book: BookEntity)
     }
 }

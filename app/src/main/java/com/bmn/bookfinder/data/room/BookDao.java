@@ -1,7 +1,6 @@
 package com.bmn.bookfinder.data.room;
 
 import androidx.room.Dao;
-import androidx.room.Ignore;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -29,4 +28,10 @@ public interface BookDao {
 
     @Query("SELECT * FROM bookentity WHERE isFavorite=1")
     List<BookEntity> getFavoriteBooks();
+
+    @Query("UPDATE bookentity SET isFavorite=:isFavorite WHERE  id=:bookId")
+    void setBookAsFavoriteById(String bookId, boolean isFavorite);
+
+    @Query("SELECT * FROM bookentity WHERE isFavorite=1 GROUP BY topicId")
+    List<BookEntity> getFavoriteTopics();
 }

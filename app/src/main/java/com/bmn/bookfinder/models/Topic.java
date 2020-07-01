@@ -7,6 +7,12 @@ public class Topic {
     private String text;
     private int image;
 
+    public Topic(String thumbnailUrl, String text, int backgroundColor) {
+        this.thumbnailUrl = thumbnailUrl;
+        this.text = text;
+        this.backgroundColor = backgroundColor;
+    }
+
     public Topic(String text, int image) {
         this.text = text;
         this.image = image;
