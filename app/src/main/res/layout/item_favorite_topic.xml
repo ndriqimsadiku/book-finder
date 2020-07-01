@@ -30,22 +30,39 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/topic_text_size"
-                app:layout_constraintBottom_toTopOf="@+id/topic_image"
+                app:layout_constraintBottom_toTopOf="@+id/image_container"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/image_container"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                app:layout_constraintDimensionRatio="1:1.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardCornerRadius="@dimen/space_small"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintVertical_bias="0.8"
+                android:elevation="@dimen/space_small">
 
                 <ImageView
                     android:id="@+id/topic_image"
+                    glideUrl="@{topic.thumbnailUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="0.6"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:scaleType="centerCrop"
-                    imageResource="@{topic.image}" />
+                    app:layout_constraintVertical_bias="0.7" />
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

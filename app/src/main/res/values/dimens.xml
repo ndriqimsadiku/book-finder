@@ -6,4 +6,5 @@
     <dimen name="topic_text_size">16sp</dimen>
     <dimen name="space_small">8dp</dimen>
     <dimen name="space_extra_large">32dp</dimen>
+    <dimen name="book_thumbnail_width">80dp</dimen>
 </resources>
