@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.BestShareListAdapter;
@@ -14,6 +15,8 @@ import com.bmn.bookfinder.adapters.TopPicksAdapter;
 import com.bmn.bookfinder.adapters.TopicsAdapter;
 import com.bmn.bookfinder.data.network.remote.ApiFunctions;
 import com.bmn.bookfinder.data.network.remote.ApiInterfaces;
+import com.bmn.bookfinder.data.room.AppDatabase;
+import com.bmn.bookfinder.data.room.BookEntity;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
 import com.bmn.bookfinder.dummydata.DummyData;
 import com.bmn.bookfinder.helpers.SharedPrefUtils;
@@ -23,15 +26,17 @@ import com.bmn.bookfinder.models.TopPick;
 import com.bmn.bookfinder.models.Topic;
 import com.bmn.bookfinder.models.googlebooks.GBResponse;
 import com.bmn.bookfinder.models.googlebooks.ResponseItem;
+import com.bmn.bookfinder.models.googlebooks.ResponseVolumeInfo;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiResponse {
+public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiResponse, TopPicksAdapter.ItemClickListener {
 
     FragmentDiscoverBinding binding;
+    private List<TopPick> topics;
 
     public DiscoverFragment() {
 
@@ -90,18 +95,47 @@ public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiRes
     public void onApiResponse(boolean status, ApiResponse apiResponse, String message) {
         if (apiResponse instanceof GBResponse) {
             GBResponse gbResponse = (GBResponse) apiResponse;
-            List<TopPick> topics = new ArrayList<>();
+            ArrayList<BookEntity> bookEntities = new ArrayList<>();
+
+            topics = new ArrayList<>();
             for (ResponseItem responseItem : gbResponse.getItems()) {
+                bookEntities.add(getBookFromNetwork(responseItem));
 
                 topics.add(new TopPick(
                         responseItem.getVolumeInfo().getTitle(),
-                        responseItem.getVolumeInfo().getImageLinks().getThumbnail()));
+                        responseItem.getVolumeInfo().getImageLinks().getThumbnail(),
+                        responseItem.getId()));
 
                 TopPicksAdapter topPicksAdapter = new TopPicksAdapter(
                         getContext(), topics
                 );
+                topPicksAdapter.setClickListener(DiscoverFragment.this);
                 binding.topPicksRv.setAdapter(topPicksAdapter);
             }
+            AppDatabase.getDatabase(getContext()).getBookDao().insertBooks(bookEntities);
         }
+    }
+
+    private BookEntity getBookFromNetwork(ResponseItem item) {
+        ResponseVolumeInfo info = item.getVolumeInfo();
+        return new BookEntity(
+                item.getId(),
+                1,
+                info.getTitle(),
+                info.getDescription(),
+                info.getImageLinks().getThumbnail(),
+                info.getAuthors(),
+                info.getAverageRating(),
+                info.getPageCount(),
+                info.getPublishedDate(),
+                false);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        DiscoverFragmentDirections.ActionDiscoverFragmentToBookActivity action =
+                DiscoverFragmentDirections.actionDiscoverFragmentToBookActivity();
+        action.setBookId(topics.get(position).getBookId());
+        Navigation.findNavController(view).navigate(action);
     }
 }
