@@ -3,10 +3,12 @@ package com.bmn.bookfinder.models;
 public class TopPick {
     private String title;
     private String imageUrl;
+    private String bookId;
 
-    public TopPick(String title, String imageUrl) {
+    public TopPick(String title, String imageUrl, String bookId) {
         this.title = title;
         this.imageUrl = imageUrl;
+        this.bookId = bookId;
     }
 
     public String getTitle() {
@@ -23,5 +25,13 @@ public class TopPick {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 }

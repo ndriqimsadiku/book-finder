@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_discoverFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_bookActivity"
+            app:destination="@id/bookActivity" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -47,4 +50,13 @@
             app:argType="string" />
 
     </fragment>
+    <activity
+        android:id="@+id/bookActivity"
+        android:name="com.bmn.bookfinder.activities.BookActivity"
+        android:label="BookActivity">
+        <argument
+            android:name="bookId"
+            android:defaultValue=""
+            app:argType="string" />
+    </activity>
 </navigation>

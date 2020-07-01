@@ -23,7 +23,6 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
     private ItemClickListener mClickListener;
     private Context context;
 
-    // data is passed into the constructor
     public TopPicksAdapter(Context context, List<TopPick> topPicks) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
@@ -40,8 +39,6 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.text.setText(topPicks.get(position).getTitle());
-        //holder.image.setImageResource(topics.get(position).getImage());
-        //Glide.with(get).load("http://goo.gl/gEgYUd").into(imageView);
         Glide.with(context)
                 .load(topPicks.get(position).getImageUrl())
                 .into(holder.image);
@@ -52,7 +49,7 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
         return topPicks.size();
     }
 
-    void setClickListener(ItemClickListener itemClickListener) {
+   public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
