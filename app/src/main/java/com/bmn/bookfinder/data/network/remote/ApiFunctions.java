@@ -20,34 +20,6 @@ public class ApiFunctions {
         this.apiResponseListener = apiResponseListener;
     }
 
-    public void getAllGenres(Context context) {
-        ApiCalls apiService = ApiUtils.getNYTimesApiService(context);
-        apiService.getBestSellers(
-                Constants.NYTimes.CHILDRENS_SERIES,
-                Constants.NYTimes.NY_API_KEY).enqueue(new Callback<NYTimesResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<NYTimesResponse> call, @NotNull Response<NYTimesResponse> response) {
-                String error;
-                if (response.isSuccessful()) {
-                    apiResponseListener.onApiResponse(true, response.body(), "");
-                } else {
-                    try {
-                        error = response.errorBody().string();
-                    } catch (Exception e) {
-                        error = "Fail";
-                        e.printStackTrace();
-                    }
-                    apiResponseListener.onApiResponse(false, response.body(), error);
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<NYTimesResponse> call, @NotNull Throwable t) {
-                apiResponseListener.onApiResponse(false, null, t.getMessage());
-            }
-        });
-    }
-
     public void getBooksBySubject(Context context, String subject) {
         ApiCalls apiService = ApiUtils.getGoogleApiService(context);
         apiService.getBooksBySubject(
@@ -75,5 +47,34 @@ public class ApiFunctions {
             }
         });
     }
+
+    public void searchBooks(Context context, String query) {
+        ApiCalls apiService = ApiUtils.getGoogleApiService(context);
+        apiService.getBooksBySubject(
+                query,
+                Constants.Google.API_KEY).enqueue(new Callback<GBResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<GBResponse> call, @NotNull Response<GBResponse> response) {
+                String error;
+                if (response.isSuccessful()) {
+                    apiResponseListener.onApiResponse(true, response.body(), "");
+                } else {
+                    try {
+                        error = response.errorBody().string();
+                    } catch (Exception e) {
+                        error = "Fail";
+                        e.printStackTrace();
+                    }
+                    apiResponseListener.onApiResponse(false, response.body(), error);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<GBResponse> call, @NotNull Throwable t) {
+                apiResponseListener.onApiResponse(false, null, t.getMessage());
+            }
+        });
+    }
+
 
 }
