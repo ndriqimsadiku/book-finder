@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bmn.bookfinder.R;
+import com.bmn.bookfinder.data.room.BookEntity;
 import com.bmn.bookfinder.models.TopPick;
 import com.bumptech.glide.Glide;
 
@@ -18,12 +19,12 @@ import java.util.List;
 
 public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHolder> {
 
-    private List<TopPick> topPicks;
+    private List<BookEntity> topPicks;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context context;
 
-    public TopPicksAdapter(Context context, List<TopPick> topPicks) {
+    public TopPicksAdapter(Context context, List<BookEntity> topPicks) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.topPicks = topPicks;
@@ -40,7 +41,7 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.text.setText(topPicks.get(position).getTitle());
         Glide.with(context)
-                .load(topPicks.get(position).getImageUrl())
+                .load(topPicks.get(position).getThumbnailUrl())
                 .into(holder.image);
     }
 
@@ -55,7 +56,7 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, String id);
     }
 
     // stores and recycles views as they are scrolled off screen
@@ -72,7 +73,7 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onItemClick(view, topPicks.get(getAdapterPosition()).getId());
         }
     }
 }

@@ -40,7 +40,7 @@ class FavoriteTopicsAdapter(val onClickListener: OnClickListener) :
             onClickListener.onClick(book)
         }
         holder.bind(book, colorPos++)
-        if (colorPos == listOfColors.size - 1) {
+        if (colorPos == listOfColors.size) {
             colorPos = 0
         }
     }
