@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -14,24 +13,26 @@ import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.adapters.BestShareListAdapter;
 import com.bmn.bookfinder.adapters.TopPicksAdapter;
 import com.bmn.bookfinder.adapters.TopicsAdapter;
+import com.bmn.bookfinder.data.room.AppDatabase;
+import com.bmn.bookfinder.data.room.BookEntity;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
 import com.bmn.bookfinder.dummydata.DummyData;
 import com.bmn.bookfinder.helpers.SharedPrefUtils;
-import com.bmn.bookfinder.models.BestShareModel;
 import com.bmn.bookfinder.models.TopPick;
 import com.bmn.bookfinder.models.Topic;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class DiscoverFragment extends Fragment implements TopPicksAdapter.ItemClickListener, TopicsAdapter.ItemTopicsClickListener {
+public class DiscoverFragment extends Fragment implements TopPicksAdapter.ItemClickListener, TopicsAdapter.OnTopicsSelectChange {
 
-    FragmentDiscoverBinding binding;
-    private List<TopPick> topics;
-    private ArrayList<Topic> checkedTopics;
+    private FragmentDiscoverBinding binding;
     private ArrayList<Topic> selectedTopics;
+    private TopPicksAdapter topPicksAdapter;
+    private TopicsAdapter topicsAdapter;
 
     public DiscoverFragment() {
 
@@ -50,26 +51,19 @@ public class DiscoverFragment extends Fragment implements TopPicksAdapter.ItemCl
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover, container, false);
-        initData();
         selectedTopics = getSelectedTopics();
+        initData();
         return binding.getRoot();
     }
 
     private void initData() {
-
-        List<BestShareModel> bestShareModels = new ArrayList<>();
-
-        TopicsAdapter topicsAdapter = new TopicsAdapter(
+        topicsAdapter = new TopicsAdapter(
                 getContext(), selectedTopics
         );
         binding.topicsRv.setAdapter(topicsAdapter);
+        topicsAdapter.setClickListener(this);
 
-        for (int i = 0; i < 20; i++) {
-            bestShareModels.add(new BestShareModel("Title", R.drawable.fatherhood, "Author"));
-        }
-        BestShareListAdapter bestShareListAdapter = new BestShareListAdapter(getContext(), bestShareModels);
-        binding.bestShareRv.setAdapter(bestShareListAdapter);
-        binding.recentleViewedRv.setAdapter(bestShareListAdapter);
+        updateSelectedTopics();
     }
 
     private ArrayList<Topic> getSelectedTopics() {
@@ -85,19 +79,36 @@ public class DiscoverFragment extends Fragment implements TopPicksAdapter.ItemCl
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, String id) {
         DiscoverFragmentDirections.ActionDiscoverFragmentToBookActivity action =
                 DiscoverFragmentDirections.actionDiscoverFragmentToBookActivity();
-        action.setBookId(topics.get(position).getBookId());
+        action.setBookId(id);
         Navigation.findNavController(view).navigate(action);
     }
 
     @Override
-    public void onItemTopicsClick(View view, int position) {
-        RelativeLayout checkedLayer = view.findViewById(R.id.topic_checked);
-        checkedLayer.setVisibility(checkedLayer.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-        if (checkedLayer.getVisibility() == View.VISIBLE) {
-            checkedTopics.add(topics.get(position));
+    public void onUpdate() {
+        updateCheckedTopics();
+    }
+
+    private void updateCheckedTopics() {
+        ArrayList<BookEntity> entities = new ArrayList<>();
+        for (Topic topic : topicsAdapter.getCheckedTopics()) {
+            entities.addAll(AppDatabase.getDatabase(getContext()).getBookDao().getBookByTopicId(topic.id));
         }
+        Collections.reverse(entities);
+        BestShareListAdapter bestShareListAdapter = new BestShareListAdapter(getContext(), entities);
+        binding.checkedTopicsBooksRv.setAdapter(bestShareListAdapter);
+    }
+
+    private void updateSelectedTopics() {
+        ArrayList<BookEntity> entities = new ArrayList<>();
+        for (Topic topic : selectedTopics) {
+            entities.add(AppDatabase.getDatabase(getContext()).getBookDao().getCheckedTopic(topic.id));
+        }
+        topPicksAdapter = new TopPicksAdapter(getContext(), entities);
+        topPicksAdapter.setClickListener(this);
+        binding.topPicksRv.setAdapter(topPicksAdapter);
+
     }
 }
