@@ -44,7 +44,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         progressDialog.setCancelable(false);
 
         binding = FragmentSignUpBinding.inflate(inflater);
-        setOnClickListeners(binding.signUpButton, binding.login);
+        setOnClickListeners(binding.signUpButton);
 
         return binding.getRoot();
     }
@@ -62,10 +62,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             case (R.id.sign_up_button):
                 createAccount();
                 break;
-            case (R.id.login):
-                LoginFragment loginFragment = new LoginFragment();
-                FragmentHelper.changeFragment(getParentFragmentManager(), loginFragment);
-                break;
+
         }
     }
 

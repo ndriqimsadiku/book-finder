@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.bmn.bookfinder.R;
 import com.bmn.bookfinder.activities.MainActivity;
 import com.bmn.bookfinder.databinding.FragmentLoginBinding;
-import com.bmn.bookfinder.helpers.FragmentHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.bmn.bookfinder.utils.Utils.isValidEmail;
@@ -49,7 +48,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         progressDialog.setMessage(getString(R.string.logging_in));
         progressDialog.setCancelable(false);
 
-        setOnClickListeners(binding.loginButton, binding.signup);
+        setOnClickListeners(binding.loginButton);
 
         return binding.getRoot();
     }
@@ -65,9 +64,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case (R.id.login_button):
                 login();
-                break;
-            case (R.id.signup):
-                FragmentHelper.changeFragment(getParentFragmentManager(), new SignUpFragment());
                 break;
         }
     }

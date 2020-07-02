@@ -1,5 +1,6 @@
 package com.bmn.bookfinder.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,36 +11,34 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.bmn.bookfinder.R;
-import com.bmn.bookfinder.adapters.BestShareListAdapter;
-import com.bmn.bookfinder.adapters.TopPicksAdapter;
-import com.bmn.bookfinder.adapters.TopicsAdapter;
+import com.bmn.bookfinder.adapters.TopicBooksAdapter;
+import com.bmn.bookfinder.data.network.remote.ApiFunctions;
+import com.bmn.bookfinder.data.network.remote.ApiInterfaces;
 import com.bmn.bookfinder.data.room.AppDatabase;
 import com.bmn.bookfinder.data.room.BookEntity;
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding;
-import com.bmn.bookfinder.dummydata.DummyData;
-import com.bmn.bookfinder.helpers.SharedPrefUtils;
-import com.bmn.bookfinder.models.TopPick;
-import com.bmn.bookfinder.models.Topic;
+import com.bmn.bookfinder.models.ApiResponse;
+import com.bmn.bookfinder.models.googlebooks.GBResponse;
+import com.bmn.bookfinder.models.googlebooks.ResponseItem;
+import com.bmn.bookfinder.models.googlebooks.ResponseVolumeInfo;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public class DiscoverFragment extends Fragment implements TopPicksAdapter.ItemClickListener, TopicsAdapter.OnTopicsSelectChange {
+public class DiscoverFragment extends Fragment implements ApiInterfaces.onApiResponse, TopicBooksAdapter.OnItemTopicBookClick {
 
     private FragmentDiscoverBinding binding;
-    private ArrayList<Topic> selectedTopics;
-    private TopPicksAdapter topPicksAdapter;
-    private TopicsAdapter topicsAdapter;
+    private ApiFunctions mApiFunctions;
+    private ProgressDialog progressDialog;
+
 
     public DiscoverFragment() {
 
     }
 
-    public static DiscoverFragment newInstance() {
-        return new DiscoverFragment();
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
 
     @Override
@@ -51,64 +50,73 @@ public class DiscoverFragment extends Fragment implements TopPicksAdapter.ItemCl
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover, container, false);
-        selectedTopics = getSelectedTopics();
         initData();
         return binding.getRoot();
     }
 
     private void initData() {
-        topicsAdapter = new TopicsAdapter(
-                getContext(), selectedTopics
-        );
-        binding.topicsRv.setAdapter(topicsAdapter);
-        topicsAdapter.setClickListener(this);
+        mApiFunctions = new ApiFunctions();
+        mApiFunctions.setApiGenresResponseListener(this);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.searching));
+        progressDialog.setCancelable(false);
 
-        updateSelectedTopics();
+        binding.iconSearch.setOnClickListener(v -> {
+            if (binding.searchEditText.getText().toString().isEmpty()) {
+                binding.searchEditText.requestFocus();
+                binding.searchEditText.setError(getString(R.string.type_something));
+                return;
+            }
+            progressDialog.show();
+            mApiFunctions.searchBooks(getContext(), binding.searchEditText.getText().toString());
+        });
     }
 
-    private ArrayList<Topic> getSelectedTopics() {
-        ArrayList<Topic> allTopics = DummyData.getFirstUseTopics();
-        ArrayList<Topic> selectedTopics = new ArrayList<>();
-        ArrayList<Integer> ids = SharedPrefUtils.getFavoriteIds(getContext());
-        for (Topic topic : allTopics) {
-            if (ids.contains(topic.id)) {
-                selectedTopics.add(topic);
+    @Override
+    public void onApiResponse(boolean status, ApiResponse apiResponse, String message) {
+        progressDialog.cancel();
+        if (status) {
+            ArrayList<BookEntity> bookEntities = new ArrayList<>();
+
+            GBResponse gbResponse = (GBResponse) apiResponse;
+            if (gbResponse != null) {
+                for (ResponseItem item : gbResponse.getItems()) {
+
+                    if (item.getVolumeInfo().getImageLinks() != null) {
+                        bookEntities.add(getBookFromNetwork(item));
+                    }
+                }
+                TopicBooksAdapter booksAdapter = new TopicBooksAdapter(getContext());
+                booksAdapter.setListener(this);
+                booksAdapter.setBooks(bookEntities);
+                AppDatabase.getDatabase(getContext()).getBookDao().insertBooks(bookEntities);
+
+                binding.searchResultsRv.setAdapter(booksAdapter);
             }
         }
-        return selectedTopics;
+    }
+
+    private BookEntity getBookFromNetwork(ResponseItem item) {
+        ResponseVolumeInfo info = item.getVolumeInfo();
+        return new BookEntity(
+                item.getId(),
+                0,
+                "General",
+                info.getTitle(),
+                info.getDescription(),
+                info.getImageLinks().getThumbnail(),
+                info.getAuthors(),
+                info.getAverageRating(),
+                info.getPageCount(),
+                info.getPublishedDate(),
+                false);
     }
 
     @Override
-    public void onItemClick(View view, String id) {
+    public void onItemTopicBookClick(View view, String bookId) {
         DiscoverFragmentDirections.ActionDiscoverFragmentToBookActivity action =
                 DiscoverFragmentDirections.actionDiscoverFragmentToBookActivity();
-        action.setBookId(id);
+        action.setBookId(bookId);
         Navigation.findNavController(view).navigate(action);
-    }
-
-    @Override
-    public void onUpdate() {
-        updateCheckedTopics();
-    }
-
-    private void updateCheckedTopics() {
-        ArrayList<BookEntity> entities = new ArrayList<>();
-        for (Topic topic : topicsAdapter.getCheckedTopics()) {
-            entities.addAll(AppDatabase.getDatabase(getContext()).getBookDao().getBookByTopicId(topic.id));
-        }
-        Collections.reverse(entities);
-        BestShareListAdapter bestShareListAdapter = new BestShareListAdapter(getContext(), entities);
-        binding.checkedTopicsBooksRv.setAdapter(bestShareListAdapter);
-    }
-
-    private void updateSelectedTopics() {
-        ArrayList<BookEntity> entities = new ArrayList<>();
-        for (Topic topic : selectedTopics) {
-            entities.add(AppDatabase.getDatabase(getContext()).getBookDao().getCheckedTopic(topic.id));
-        }
-        topPicksAdapter = new TopPicksAdapter(getContext(), entities);
-        topPicksAdapter.setClickListener(this);
-        binding.topPicksRv.setAdapter(topPicksAdapter);
-
     }
 }
