@@ -11,19 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bmn.bookfinder.R;
-import com.bmn.bookfinder.models.BestShareModel;
+import com.bmn.bookfinder.data.room.BookEntity;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdapter.ViewHolder> {
 
-    private List<BestShareModel> bestShareModels;
+    private List<BookEntity> bestShareModels;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context;
 
-    public BestShareListAdapter(Context context, List<BestShareModel> bestShareModels) {
+    public BestShareListAdapter(Context context, List<BookEntity> bestShareModels) {
         this.mInflater = LayoutInflater.from(context);
         this.bestShareModels = bestShareModels;
+        this.context = context;
     }
 
     @Override
@@ -35,9 +38,15 @@ public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(bestShareModels.get(position).getTitle());
-        holder.author.setText(bestShareModels.get(position).getAuthor());
-        holder.image.setImageResource(bestShareModels.get(position).getImage());
+        BookEntity bookEntity=bestShareModels.get(position);
+        if (bookEntity!=null) {
+            holder.title.setText(bookEntity.getTitle());
+            holder.author.setText(bookEntity.getAuthors().get(0));
+            Glide.with(context)
+                    .load(bestShareModels.get(position).getThumbnailUrl())
+                    .into(holder.image);
+        }
+
     }
 
     @Override
@@ -45,7 +54,7 @@ public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdap
         return bestShareModels.size();
     }
 
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

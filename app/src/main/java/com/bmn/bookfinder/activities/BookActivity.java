@@ -15,8 +15,9 @@ import java.util.List;
 
 public class BookActivity extends AppCompatActivity {
 
-    ActivityBookBinding binding;
-    BookEntity bookEntity;
+    private ActivityBookBinding binding;
+    private BookEntity bookEntity;
+    private String bookId;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -25,24 +26,22 @@ public class BookActivity extends AppCompatActivity {
         binding = ActivityBookBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String bookId = BookActivityArgs.fromBundle(getIntent().getExtras()).getBookId();
+        bookId = BookActivityArgs.fromBundle(getIntent().getExtras()).getBookId();
         setBookData(bookId);
-
-
         binding.bookRating.setOnTouchListener((v, event) -> true);
         listenBookFavoriteChanges();
     }
 
     void listenBookFavoriteChanges() {
         binding.favoriteBook.setOnClickListener(v -> {
-            //TODO update on db
-            //AppDatabase.getDatabase(getApplicationContext()).getBookDao().
             bookEntity.setFavorite(!bookEntity.isFavorite());
             binding.favoriteBook.setImageDrawable(
                     bookEntity.isFavorite() ?
                             getDrawable(R.drawable.ic_heart_on) :
                             getDrawable(R.drawable.ic_heart)
             );
+            AppDatabase.getDatabase(getApplicationContext()).getBookDao().setBookAsFavoriteById(bookId, bookEntity.isFavorite());
+
         });
 
     }
