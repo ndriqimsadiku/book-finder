@@ -69,12 +69,17 @@ public class BookActivity extends AppCompatActivity {
     private void formatAuthors(List<String> authors) {
         StringBuilder authorsBuilder = new StringBuilder();
 
-        for (String author : authors) {
-            if (authors.indexOf(author) == authors.size() - 1) {
-                authorsBuilder.append(author);
+        if (!authors.isEmpty()) {
+            for (String author : authors) {
+                if (authors.indexOf(author) == authors.size() - 1) {
+                    authorsBuilder.append(author);
+                }
+                authorsBuilder.append(String.format("%s, ", author));
             }
-            authorsBuilder.append(String.format("%s, ", author));
+            binding.bookAuthors.setText(authorsBuilder.toString());
+        } else {
+            binding.bookAuthors.setText(R.string.anonymous);
+
         }
-        binding.bookAuthors.setText(authorsBuilder.toString());
     }
 }
