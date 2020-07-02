@@ -34,4 +34,7 @@ public interface BookDao {
 
     @Query("SELECT * FROM bookentity WHERE isFavorite=1 GROUP BY topicId")
     List<BookEntity> getFavoriteTopics();
+
+    @Query("SELECT * FROM bookentity WHERE topicId = :topicId GROUP BY topicId")
+    BookEntity getCheckedTopic(long topicId);
 }

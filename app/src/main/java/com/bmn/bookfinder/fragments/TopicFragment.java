@@ -37,8 +37,6 @@ public class TopicFragment extends Fragment {
         TopicBooksAdapter booksAdapter = new TopicBooksAdapter(getContext());
         booksAdapter.setBooks(list);
 
-        binding.listEmptyMessage.setVisibility((list != null && !list.isEmpty()) ? View.VISIBLE : View.GONE);
-
         binding.bookList.setAdapter(booksAdapter);
         return binding.getRoot();
     }
