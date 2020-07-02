@@ -25,6 +25,7 @@ public class TopicBooksAdapter extends RecyclerView.Adapter<TopicBooksAdapter.Vi
 
     private List<BookEntity> books;
     private Context mContext;
+    private OnItemTopicBookClick listener;
 
     public TopicBooksAdapter(Context context) {
         this.mContext = context;
@@ -39,7 +40,7 @@ public class TopicBooksAdapter extends RecyclerView.Adapter<TopicBooksAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_book, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_book, parent, false), listener);
     }
 
     @Override
@@ -55,16 +56,32 @@ public class TopicBooksAdapter extends RecyclerView.Adapter<TopicBooksAdapter.Vi
         return books.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public void setListener(OnItemTopicBookClick listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemTopicBookClick {
+        void onItemTopicBookClick(View view, String bookId);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private ImageView thumbnail;
         private TextView description;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemTopicBookClick listener) {
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             description = itemView.findViewById(R.id.book_description);
             thumbnail = itemView.findViewById(R.id.book_thumbnail);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemTopicBookClick(itemView, books.get(getAdapterPosition()).getId());
+                }
+            });
         }
+
+
     }
 }

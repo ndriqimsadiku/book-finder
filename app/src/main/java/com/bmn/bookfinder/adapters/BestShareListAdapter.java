@@ -20,7 +20,7 @@ public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdap
 
     private List<BookEntity> bestShareModels;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private ItemCheckedListClickListener mClickListener;
     private Context context;
 
     public BestShareListAdapter(Context context, List<BookEntity> bestShareModels) {
@@ -38,8 +38,8 @@ public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BookEntity bookEntity=bestShareModels.get(position);
-        if (bookEntity!=null) {
+        BookEntity bookEntity = bestShareModels.get(position);
+        if (bookEntity != null) {
             holder.title.setText(bookEntity.getTitle());
             holder.author.setText(bookEntity.getAuthors().get(0));
             Glide.with(context)
@@ -54,12 +54,12 @@ public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdap
         return bestShareModels.size();
     }
 
-    public void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemCheckedListClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
+    public interface ItemCheckedListClickListener {
+        void onItemClick(View view, String bookId);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -76,7 +76,9 @@ public class BestShareListAdapter extends RecyclerView.Adapter<BestShareListAdap
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) {
+                mClickListener.onItemClick(view, bestShareModels.get(getAdapterPosition()).getId());
+            }
         }
     }
 }

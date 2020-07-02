@@ -28,6 +28,18 @@ public class CreateAccountViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "Login";
+            case 1:
+                return "Sign up";
+            default:
+                return null;
+        }
+    }
+
+    @Override
     public int getCount() {
         return mFragmentList.size();
     }
