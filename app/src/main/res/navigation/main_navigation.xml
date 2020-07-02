@@ -3,7 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation"
-    app:startDestination="@id/discoverFragment">
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.bmn.bookfinder.fragments.HomeFragment"
+        android:label="HomeFragment">
+
+        <action
+            android:id="@+id/action_homeFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookActivity"
+            app:destination="@id/bookActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/discoverFragment"
@@ -16,6 +29,7 @@
             android:id="@+id/action_discoverFragment_to_bookActivity"
             app:destination="@id/bookActivity" />
     </fragment>
+
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.bmn.bookfinder.fragments.FavoritesFragment"
@@ -48,6 +62,9 @@
             android:name="topicTitle"
             android:defaultValue=""
             app:argType="string" />
+        <action
+            android:id="@+id/action_topicFragment_to_bookActivity"
+            app:destination="@id/bookActivity" />
 
     </fragment>
     <activity

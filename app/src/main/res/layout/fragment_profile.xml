@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/space_normal"
-                    android:src="@drawable/ic_notifications" />
+                    android:src="@drawable/ic_log_out" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -156,12 +156,12 @@
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:src="@drawable/ic_pink_baseline_library_books_24"
+                app:layout_constraintBottom_toBottomOf="@id/guideline"
                 app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="@drawable/ic_pink_baseline_library_books_24"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/guideline"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/no_account_textview"
