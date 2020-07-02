@@ -1,5 +1,13 @@
 This is a university project.
 
+Contributors: 
+
+Blerina Fejza: [GitHub] (https://github.com/blerinafejza)
+
+Miran Mustafa: [GitHub] (https://github.com/MiranMustafa)
+
+Ndriçim Sadiku: [GitHub] (https://github.com/ndriqimsadiku)
+
 All the icons and images are used only for educational purpose!
 
 This is and android application that uses java and kotlin programming langauges.
