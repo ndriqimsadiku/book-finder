@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bmn.bookfinder.adapters.TopicBooksAdapter;
 import com.bmn.bookfinder.data.room.AppDatabase;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by Ndriçim Sadiku on 01 July 2020
  * ndricim@frakton.com
  */
-public class TopicFragment extends Fragment {
+public class TopicFragment extends Fragment implements TopicBooksAdapter.OnItemTopicBookClick {
 
     @Nullable
     @Override
@@ -35,10 +36,18 @@ public class TopicFragment extends Fragment {
 
         List<BookEntity> list = AppDatabase.getDatabase(getContext()).getBookDao().getBookByTopicId(args.getTopicId());
         TopicBooksAdapter booksAdapter = new TopicBooksAdapter(getContext());
+        booksAdapter.setListener(this);
         booksAdapter.setBooks(list);
 
         binding.bookList.setAdapter(booksAdapter);
         return binding.getRoot();
     }
 
+    @Override
+    public void onItemTopicBookClick(View view, String bookId) {
+        TopicFragmentDirections.ActionTopicFragmentToBookActivity action =
+                TopicFragmentDirections.actionTopicFragmentToBookActivity();
+        action.setBookId(bookId);
+        Navigation.findNavController(view).navigate(action);
+    }
 }

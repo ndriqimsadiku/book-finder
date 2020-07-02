@@ -151,6 +151,4 @@ public class ChooseTopicsActivity extends AppCompatActivity implements View.OnCl
                 info.getPublishedDate(),
                 false);
     }
-
-
 }
