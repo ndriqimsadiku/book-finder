@@ -85,3 +85,8 @@ lint/tmp/
 # lint/reports/
 .idea/codeStyles/codeStyleConfig.xml
 .idea/misc.xml
+.idea/runConfigurations.xml
+.idea/codeStyles/Project.xml
+.idea/dbnavigator.xml
+.idea/codeStyles/Project.xml
+.idea/compiler.xml
