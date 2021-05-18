@@ -1,0 +1,32 @@
+package com.bmn.bookfinder.data.room
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+
+@Database(entities = [BookEntity::class], version = 1, exportSchema = false)
+@TypeConverters(
+    Converters::class
+)
+abstract class AppDatabase : RoomDatabase() {
+    abstract val bookDao: BookDao?
+
+    companion object {
+        private const val DB_NAME = "bookFinder.db"
+        private var INSTANCE: AppDatabase? = null
+        @JvmStatic
+        fun getDatabase(context: Context?): AppDatabase? {
+            if (INSTANCE == null) {
+                synchronized(AppDatabase::class.java) {
+                    if (INSTANCE == null) {
+                        INSTANCE = Room.databaseBuilder(context!!, AppDatabase::class.java, DB_NAME)
+                            .allowMainThreadQueries().build()
+                    }
+                }
+            }
+            return INSTANCE
+        }
+    }
+}

@@ -41,17 +41,17 @@ class BookActivity : AppCompatActivity() {
 
     private fun setBookData(bookId: String) {
         bookEntity = AppDatabase.getDatabase(applicationContext).bookDao.getBookById(bookId)
-        formatAuthors(bookEntity.getAuthors())
-        binding!!.bookDescription.text = bookEntity.getDescription()
-        binding!!.bookPageCount.text = getString(R.string.page_count_d, bookEntity.getPageCount())
-        binding!!.bookPublishedDate.text = bookEntity.getPublishedDate()
-        binding!!.bookTitle.text = bookEntity.getTitle()
-        binding!!.bookRating.rating = bookEntity.getAverageRating().toFloat()
+        formatAuthors(bookEntity.authors)
+        binding!!.bookDescription.text = bookEntity.description
+        binding!!.bookPageCount.text = getString(R.string.page_count_d, bookEntity.pageCount)
+        binding!!.bookPublishedDate.text = bookEntity.publishedDate
+        binding!!.bookTitle.text = bookEntity.title
+        binding!!.bookRating.rating = bookEntity.averageRating.toFloat()
         binding!!.favoriteBook.setImageDrawable(
             if (bookEntity.isFavorite()) getDrawable(R.drawable.ic_heart_on) else getDrawable(R.drawable.ic_heart)
         )
         Glide.with(this)
-            .load(bookEntity.getThumbnailUrl())
+            .load(bookEntity.thumbnailUrl)
             .into(binding!!.bookImage)
     }
 
