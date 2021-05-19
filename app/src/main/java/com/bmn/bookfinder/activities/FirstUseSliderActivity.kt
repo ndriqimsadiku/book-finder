@@ -11,7 +11,8 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.bmn.bookfinder.R
 import com.bmn.bookfinder.adapters.FirstUseViewPagerAdapter
 import com.bmn.bookfinder.databinding.ActivityFirstUserSliderBinding
-import com.bmn.bookfinder.utils.DimenUtils
+import com.bmn.bookfinder.utils.setBottomPadding
+import com.bmn.bookfinder.utils.setTopBottomPadding
 
 class FirstUseSliderActivity : AppCompatActivity(), View.OnClickListener, OnPageChangeListener {
     private lateinit var binding: ActivityFirstUserSliderBinding
@@ -32,7 +33,7 @@ class FirstUseSliderActivity : AppCompatActivity(), View.OnClickListener, OnPage
         binding.firstUseViewPager.adapter = FirstUseViewPagerAdapter(applicationContext)
         binding.firstUseViewPager.addOnPageChangeListener(this)
         binding.firstUseSliderIndicator.setViewPager(binding.firstUseViewPager)
-        DimenUtils.setTopBottomPadding(binding.root)
+        binding.root.setTopBottomPadding()
     }
 
     override fun onClick(v: View) {

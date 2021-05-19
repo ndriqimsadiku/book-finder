@@ -8,6 +8,8 @@ import androidx.navigation.ui.NavigationUI
 import com.bmn.bookfinder.R
 import com.bmn.bookfinder.databinding.ActivityMainBinding
 import com.bmn.bookfinder.utils.DimenUtils
+import com.bmn.bookfinder.utils.setTopBottomPadding
+import com.bmn.bookfinder.utils.setTopPadding
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initData()
-        DimenUtils.setTopPadding(binding.root)
+        binding.root.setTopPadding()
     }
 
     private fun initData() {

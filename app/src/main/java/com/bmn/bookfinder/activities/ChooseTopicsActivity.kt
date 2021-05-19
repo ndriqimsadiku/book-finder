@@ -24,6 +24,7 @@ import com.bmn.bookfinder.models.googlebooks.GBResponse
 import com.bmn.bookfinder.models.googlebooks.ResponseItem
 import com.bmn.bookfinder.utils.AppUtils
 import com.bmn.bookfinder.utils.DimenUtils
+import com.bmn.bookfinder.utils.setTopBottomPadding
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -40,7 +41,7 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
         setContentView(binding.root)
         appDatabase = AppDatabase.getDatabase(this)
         binding.topicsGrid.layoutManager = GridLayoutManager(applicationContext, 3)
-        DimenUtils.setTopBottomPadding(binding.root)
+        binding.root.setTopBottomPadding()
         val chooseTopicsLayoutAdapter = ChooseTopicsLayoutAdapter(
             applicationContext, DummyData.getFirstUseTopics()
         )
