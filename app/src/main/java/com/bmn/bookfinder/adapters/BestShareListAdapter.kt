@@ -11,7 +11,7 @@ import com.bmn.bookfinder.R
 import com.bmn.bookfinder.data.room.BookEntity
 import com.bumptech.glide.Glide
 
-class BestShareListAdapter(val context: Context, val bestShareModels: List<BookEntity>) :
+class BestShareListAdapter(val context: Context, val bestShareModels: List<BookEntity?>) :
     RecyclerView.Adapter<BestShareListAdapter.ViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mClickListener: ItemCheckedListClickListener? = null
@@ -22,10 +22,11 @@ class BestShareListAdapter(val context: Context, val bestShareModels: List<BookE
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bookEntity = bestShareModels[position]
+        bookEntity ?: return
         holder.title.text = bookEntity.title
         holder.author.text = bookEntity.authors[0]
         Glide.with(context)
-            .load(bestShareModels[position].thumbnailUrl)
+            .load(bookEntity.thumbnailUrl)
             .into(holder.image)
     }
 
@@ -48,7 +49,7 @@ class BestShareListAdapter(val context: Context, val bestShareModels: List<BookE
         var image: ImageView = itemView.findViewById(R.id.book_cover)
         override fun onClick(view: View) {
             if (mClickListener != null) {
-                mClickListener!!.onItemClick(view, bestShareModels[adapterPosition].id)
+                mClickListener!!.onItemClick(view, bestShareModels[adapterPosition]?.id)
             }
         }
 

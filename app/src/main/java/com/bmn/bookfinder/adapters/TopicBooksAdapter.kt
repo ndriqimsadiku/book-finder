@@ -18,9 +18,9 @@ import java.util.*
  */
 class TopicBooksAdapter(private val mContext: Context) :
     RecyclerView.Adapter<TopicBooksAdapter.ViewHolder>() {
-    private var books: List<BookEntity>
+    private var books: List<BookEntity?>
     private var listener: OnItemTopicBookClick? = null
-    fun setBooks(topics: List<BookEntity>) {
+    fun setBooks(topics: List<BookEntity?>) {
         books = topics
         notifyDataSetChanged()
     }
@@ -34,6 +34,7 @@ class TopicBooksAdapter(private val mContext: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
+        book ?: return
         holder.title.text = book.title
         holder.description.text = book.description
         Glide.with(mContext).load(book.thumbnailUrl).into(holder.thumbnail)
@@ -53,18 +54,15 @@ class TopicBooksAdapter(private val mContext: Context) :
 
     inner class ViewHolder(itemView: View, listener: OnItemTopicBookClick?) :
         RecyclerView.ViewHolder(itemView) {
-        val title: TextView
-        val thumbnail: ImageView
-        val description: TextView
+        val title: TextView = itemView.findViewById(R.id.book_title)
+        val thumbnail: ImageView = itemView.findViewById(R.id.book_thumbnail)
+        val description: TextView = itemView.findViewById(R.id.book_description)
 
         init {
-            title = itemView.findViewById(R.id.book_title)
-            description = itemView.findViewById(R.id.book_description)
-            thumbnail = itemView.findViewById(R.id.book_thumbnail)
-            itemView.setOnClickListener { v: View? ->
+            itemView.setOnClickListener {
                 listener?.onItemTopicBookClick(
                     itemView,
-                    books[adapterPosition].id
+                    books[adapterPosition]?.id
                 )
             }
         }

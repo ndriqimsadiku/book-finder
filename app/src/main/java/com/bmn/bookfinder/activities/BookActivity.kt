@@ -15,12 +15,13 @@ class BookActivity : AppCompatActivity() {
     private var binding: ActivityBookBinding? = null
     private var bookEntity: BookEntity? = null
     private var bookId: String? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-        bookId = BookActivityArgs.fromBundle(intent.extras).bookId
+        bookId = BookActivityArgs.fromBundle(intent.extras!!).bookId
         setBookData(bookId!!)
         binding!!.bookRating.setOnTouchListener { v: View?, event: MotionEvent? -> true }
         listenBookFavoriteChanges()
@@ -41,6 +42,8 @@ class BookActivity : AppCompatActivity() {
 
     private fun setBookData(bookId: String) {
         bookEntity = AppDatabase.getDatabase(applicationContext).bookDao.getBookById(bookId)
+        val bookEntity = bookEntity
+        bookEntity ?: return
         formatAuthors(bookEntity.authors)
         binding!!.bookDescription.text = bookEntity.description
         binding!!.bookPageCount.text = getString(R.string.page_count_d, bookEntity.pageCount)
@@ -48,7 +51,7 @@ class BookActivity : AppCompatActivity() {
         binding!!.bookTitle.text = bookEntity.title
         binding!!.bookRating.rating = bookEntity.averageRating.toFloat()
         binding!!.favoriteBook.setImageDrawable(
-            if (bookEntity.isFavorite()) getDrawable(R.drawable.ic_heart_on) else getDrawable(R.drawable.ic_heart)
+            if (bookEntity.isFavorite) getDrawable(R.drawable.ic_heart_on) else getDrawable(R.drawable.ic_heart)
         )
         Glide.with(this)
             .load(bookEntity.thumbnailUrl)
@@ -57,7 +60,7 @@ class BookActivity : AppCompatActivity() {
 
     private fun formatAuthors(authors: List<String>) {
         val authorsBuilder = StringBuilder()
-        if (!authors.isEmpty()) {
+        if (authors.isNotEmpty()) {
             for (author in authors) {
                 if (authors.indexOf(author) == authors.size - 1) {
                     authorsBuilder.append(author)

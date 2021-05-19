@@ -22,8 +22,7 @@ import com.bmn.bookfinder.models.ApiResponse
 import com.bmn.bookfinder.models.Topic
 import com.bmn.bookfinder.models.googlebooks.GBResponse
 import com.bmn.bookfinder.models.googlebooks.ResponseItem
-import com.bmn.bookfinder.utils.AppUtils
-import com.bmn.bookfinder.utils.DimenUtils
+import com.bmn.bookfinder.utils.AppUtils.isInternetAvailable
 import com.bmn.bookfinder.utils.setTopBottomPadding
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -43,7 +42,7 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
         binding.topicsGrid.layoutManager = GridLayoutManager(applicationContext, 3)
         binding.root.setTopBottomPadding()
         val chooseTopicsLayoutAdapter = ChooseTopicsLayoutAdapter(
-            applicationContext, DummyData.getFirstUseTopics()
+            applicationContext, DummyData.firstUseTopics
         )
         binding.topicsGrid.adapter = chooseTopicsLayoutAdapter
         binding.applyTopicsButton.setOnClickListener(this)
@@ -52,9 +51,9 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
     }
 
     override fun onClick(v: View) {
-        if (!SharedPrefUtils.getFavoriteIds(applicationContext).isEmpty()) {
+        if (SharedPrefUtils.getFavoriteIds(applicationContext).isNotEmpty()) {
             selectedTopics = getSelectedTopics()
-            if (AppUtils.isInternetAvailable(applicationContext)) {
+            if (applicationContext.isInternetAvailable()) {
                 showAlertDialog()
                 mApiFunctions!!.getBooksBySubject(
                     applicationContext,
@@ -89,7 +88,7 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
     }
 
     private fun getSelectedTopics(): ArrayList<Topic> {
-        val allTopics = DummyData.getFirstUseTopics()
+        val allTopics = DummyData.firstUseTopics
         val selectedTopics = ArrayList<Topic>()
         val ids = SharedPrefUtils.getFavoriteIds(applicationContext)
         for (topic in allTopics) {
@@ -122,14 +121,14 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
                         )
                     }
                 }
-                databaseAsync.execute(bookEntities)
+//                databaseAsync.execute(bookEntities!!)
             }
         }
     }
 
     private val nextTopicBooks: Unit
-        private get() {
-            if (AppUtils.isInternetAvailable(applicationContext)) {
+        get() {
+            if (applicationContext.isInternetAvailable()) {
                 mApiFunctions!!.getBooksBySubject(
                     applicationContext,
                     selectedTopics!![currentIndex].text
@@ -147,7 +146,7 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
         val info = item.volumeInfo
         return BookEntity(
             item.id,
-            selectedTopics!![currentIndex].id.toLong(),
+            selectedTopics!![currentIndex].id?.toLong() ?: 0L,
             selectedTopics!![currentIndex].text,
             info.title,
             info.description,

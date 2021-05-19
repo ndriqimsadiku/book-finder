@@ -2,7 +2,7 @@ package com.bmn.bookfinder.data.network.remote;
 
 import android.content.Context;
 
-import com.bmn.bookfinder.helpers.Constants;
+import com.bmn.bookfinder.helpers.Google;
 import com.bmn.bookfinder.models.googlebooks.GBResponse;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +23,7 @@ public class ApiFunctions {
         ApiCalls apiService = ApiUtils.getGoogleApiService(context);
         apiService.getBooksBySubject(
                 String.format(ApiUtils.QUERY_SUBJECT, subject),
-                Constants.Google.API_KEY).enqueue(new Callback<GBResponse>() {
+                Google.API_KEY).enqueue(new Callback<GBResponse>() {
             @Override
             public void onResponse(@NotNull Call<GBResponse> call, @NotNull Response<GBResponse> response) {
                 String error;
@@ -51,7 +51,7 @@ public class ApiFunctions {
         ApiCalls apiService = ApiUtils.getGoogleApiService(context);
         apiService.getBooksBySubject(
                 query,
-                Constants.Google.API_KEY).enqueue(new Callback<GBResponse>() {
+                Google.API_KEY).enqueue(new Callback<GBResponse>() {
             @Override
             public void onResponse(@NotNull Call<GBResponse> call, @NotNull Response<GBResponse> response) {
                 String error;

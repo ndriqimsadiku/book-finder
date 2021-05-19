@@ -11,19 +11,18 @@ import androidx.room.TypeConverters
     Converters::class
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract val bookDao: BookDao?
+    abstract val bookDao: BookDao
 
     companion object {
         private const val DB_NAME = "bookFinder.db"
-        private var INSTANCE: AppDatabase? = null
+        private lateinit var INSTANCE: AppDatabase
+
         @JvmStatic
-        fun getDatabase(context: Context?): AppDatabase? {
-            if (INSTANCE == null) {
+        fun getDatabase(context: Context?): AppDatabase {
+            if (!::INSTANCE.isInitialized) {
                 synchronized(AppDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context!!, AppDatabase::class.java, DB_NAME)
-                            .allowMainThreadQueries().build()
-                    }
+                    INSTANCE = Room.databaseBuilder(context!!, AppDatabase::class.java, DB_NAME)
+                        .allowMainThreadQueries().build()
                 }
             }
             return INSTANCE

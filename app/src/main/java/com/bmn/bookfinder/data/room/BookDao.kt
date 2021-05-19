@@ -22,7 +22,7 @@ interface BookDao {
     fun getBookByTopicId(topicId: Long): List<BookEntity?>?
 
     @Query("SELECT * FROM bookentity WHERE id=:bookId")
-    fun getBookById(bookId: String?): BookEntity?
+    fun getBookById(bookId: String): BookEntity?
 
     @get:Query("SELECT * FROM bookentity WHERE isFavorite=1")
     val favoriteBooks: List<BookEntity?>?

@@ -7,13 +7,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.bmn.bookfinder.R
 import com.bmn.bookfinder.databinding.ActivityMainBinding
-import com.bmn.bookfinder.utils.DimenUtils
-import com.bmn.bookfinder.utils.setTopBottomPadding
 import com.bmn.bookfinder.utils.setTopPadding
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-     private lateinit var binding: ActivityMainBinding;
+    private lateinit var binding: ActivityMainBinding;
     public override fun onCreate(savedInstanceState: Bundle?) {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
