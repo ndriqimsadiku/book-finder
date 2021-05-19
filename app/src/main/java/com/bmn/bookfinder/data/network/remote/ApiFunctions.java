@@ -3,7 +3,6 @@ package com.bmn.bookfinder.data.network.remote;
 import android.content.Context;
 
 import com.bmn.bookfinder.helpers.Constants;
-import com.bmn.bookfinder.models.NYTimesResponse;
 import com.bmn.bookfinder.models.googlebooks.GBResponse;
 
 import org.jetbrains.annotations.NotNull;
