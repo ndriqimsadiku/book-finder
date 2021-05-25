@@ -18,9 +18,9 @@ import java.util.*
  */
 class TopicBooksAdapter(private val mContext: Context) :
     RecyclerView.Adapter<TopicBooksAdapter.ViewHolder>() {
-    private var books: List<BookEntity?>
+    private var books: List<BookEntity>
     private var listener: OnItemTopicBookClick? = null
-    fun setBooks(topics: List<BookEntity?>) {
+    fun setBooks(topics: List<BookEntity>) {
         books = topics
         notifyDataSetChanged()
     }
@@ -34,7 +34,6 @@ class TopicBooksAdapter(private val mContext: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
-        book ?: return
         holder.title.text = book.title
         holder.description.text = book.description
         Glide.with(mContext).load(book.thumbnailUrl).into(holder.thumbnail)
@@ -49,7 +48,7 @@ class TopicBooksAdapter(private val mContext: Context) :
     }
 
     interface OnItemTopicBookClick {
-        fun onItemTopicBookClick(view: View?, bookId: String?)
+        fun onItemTopicBookClick(view: View, bookId: String)
     }
 
     inner class ViewHolder(itemView: View, listener: OnItemTopicBookClick?) :
@@ -62,7 +61,7 @@ class TopicBooksAdapter(private val mContext: Context) :
             itemView.setOnClickListener {
                 listener?.onItemTopicBookClick(
                     itemView,
-                    books[adapterPosition]?.id
+                    books[adapterPosition].id
                 )
             }
         }

@@ -19,7 +19,7 @@ private val listOfColors = arrayOf(
     R.color.card_dark_yellow_color
 )
 
-class FavoriteTopicsAdapter(val onClickListener: OnClickListener) :
+class FavoriteTopicsAdapter(val onClickListener: (book: BookEntity) -> Unit) :
     ListAdapter<BookEntity, FavoriteTopicsAdapter.FavoriteTopicViewHolder>(DiffCallback) {
 
     var colorPos = 0
@@ -37,7 +37,7 @@ class FavoriteTopicsAdapter(val onClickListener: OnClickListener) :
     override fun onBindViewHolder(holder: FavoriteTopicViewHolder, position: Int) {
         val book = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(book)
+            onClickListener(book)
         }
         holder.bind(book, colorPos++)
         if (colorPos == listOfColors.size) {
