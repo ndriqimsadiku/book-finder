@@ -58,7 +58,11 @@ class FavoriteTopicsAdapter(val onClickListener: OnClickListener) :
     class FavoriteTopicViewHolder(private var binding: ItemFavoriteTopicBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(book: BookEntity, pos: Int) {
-            binding.topic = Topic(book.thumbnailUrl, book.topic, listOfColors[pos])
+            binding.topic = Topic(
+                thumbnailUrl = book.thumbnailUrl,
+                text = book.topic,
+                backgroundColor = listOfColors[pos]
+            )
         }
     }
 
