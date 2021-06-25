@@ -27,8 +27,10 @@ class MainActivity : AppCompatActivity() {
     private fun initData() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
-        NavigationUI.setupWithNavController(
-            binding.navigation, Objects.requireNonNull(navHostFragment)!!.navController
-        )
+        navHostFragment?.let {
+            NavigationUI.setupWithNavController(
+                binding.navigation, it.navController
+            )
+        }
     }
 }

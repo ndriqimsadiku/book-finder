@@ -13,7 +13,7 @@ import java.util.*
 @Dao
 interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBooks(books: ArrayList<BookEntity?>?)
+    fun insertBooks(books: List<BookEntity>)
 
     @get:Query("SELECT * FROM bookentity")
     val allBooks: List<BookEntity?>?

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bmn.bookfinder.R
 import com.bmn.bookfinder.adapters.ChooseTopicsLayoutAdapter
 import com.bmn.bookfinder.data.network.remote.ApiFunctions
-import com.bmn.bookfinder.data.network.remote.ApiInterfaces.onApiResponse
+import com.bmn.bookfinder.data.network.remote.ApiInterfaces.OnApiResponse
 import com.bmn.bookfinder.data.room.AppDatabase
 import com.bmn.bookfinder.data.room.BookEntity
 import com.bmn.bookfinder.data.room.DatabaseAsync
@@ -27,7 +27,7 @@ import com.bmn.bookfinder.utils.setTopBottomPadding
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
-class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiResponse {
+class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiResponse {
     private var mApiFunctions: ApiFunctions? = null
     private var selectedTopics: ArrayList<Topic>? = null
     private var currentIndex = 0
@@ -99,7 +99,7 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, onApiRes
         return selectedTopics
     }
 
-    override fun onApiResponse(status: Boolean, apiResponse: ApiResponse, message: String) {
+    override fun onApiResponseCallback(status: Boolean, apiResponse: ApiResponse, message: String) {
         if (status) {
             val bookEntities = ArrayList<BookEntity>()
             val gbResponse = apiResponse as GBResponse

@@ -12,7 +12,7 @@ import com.bmn.bookfinder.R
 import com.bmn.bookfinder.adapters.TopicBooksAdapter
 import com.bmn.bookfinder.adapters.TopicBooksAdapter.OnItemTopicBookClick
 import com.bmn.bookfinder.data.network.remote.ApiFunctions
-import com.bmn.bookfinder.data.network.remote.ApiInterfaces.onApiResponse
+import com.bmn.bookfinder.data.network.remote.ApiInterfaces.OnApiResponse
 import com.bmn.bookfinder.data.room.AppDatabase.Companion.getDatabase
 import com.bmn.bookfinder.data.room.BookEntity
 import com.bmn.bookfinder.databinding.FragmentDiscoverBinding
@@ -21,7 +21,8 @@ import com.bmn.bookfinder.models.googlebooks.GBResponse
 import com.bmn.bookfinder.models.googlebooks.ResponseItem
 import java.util.*
 
-class DiscoverFragment : Fragment(), onApiResponse, OnItemTopicBookClick {
+class DiscoverFragment : Fragment(), OnApiResponse, OnItemTopicBookClick {
+
     private lateinit var binding: FragmentDiscoverBinding
     private var mApiFunctions: ApiFunctions? = null
     private var progressDialog: ProgressDialog? = null
@@ -52,14 +53,17 @@ class DiscoverFragment : Fragment(), onApiResponse, OnItemTopicBookClick {
         }
     }
 
-    override fun onApiResponse(status: Boolean, apiResponse: ApiResponse, message: String) {
-        progressDialog!!.cancel()
+    override fun onApiResponseCallback(status: Boolean, apiResponse: ApiResponse, message: String) {
+        progressDialog?.cancel()
         if (status) {
-            val bookEntities = ArrayList<BookEntity?>()
+            val bookEntities = mutableListOf<BookEntity>()
             val gbResponse = apiResponse as GBResponse
             for (item in gbResponse.items) {
-                if (item.volumeInfo.imageLinks != null) {
-                    bookEntities.add(getBookFromNetwork(item))
+                if (item.volumeInfo?.imageLinks != null) {
+                    val entity = getBookFromNetwork(item)
+                    entity?.let {
+                        bookEntities.add(it)
+                    }
                 }
             }
             val booksAdapter = TopicBooksAdapter(requireContext())
@@ -70,26 +74,29 @@ class DiscoverFragment : Fragment(), onApiResponse, OnItemTopicBookClick {
         }
     }
 
-    private fun getBookFromNetwork(item: ResponseItem): BookEntity {
+    private fun getBookFromNetwork(item: ResponseItem): BookEntity? {
         val info = item.volumeInfo
-        return BookEntity(
-            item.id,
-            0,
-            "General",
-            info.title,
-            info.description,
-            info.imageLinks.thumbnail,
-            info.authors,
-            info.averageRating,
-            info.pageCount,
-            info.publishedDate,
-            false
-        )
+        if (info != null) {
+            return BookEntity(
+                item.id ?: "",
+                0,
+                "General",
+                info.title ?: "",
+                info.description ?: "",
+                info.imageLinks?.thumbnail ?: "",
+                info.authors ?: emptyList(),
+                info.averageRating,
+                info.pageCount,
+                info.publishedDate ?: "",
+                false
+            )
+        }
+        return null
     }
 
-    override fun onItemTopicBookClick(view: View?, bookId: String?) {
+    override fun onItemTopicBookClick(view: View, bookId: String) {
         val action = DiscoverFragmentDirections.actionDiscoverFragmentToBookActivity()
-        action.bookId = bookId!!
+        action.bookId = bookId
         Navigation.findNavController(requireView()).navigate(action)
     }
 

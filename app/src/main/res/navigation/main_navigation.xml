@@ -46,7 +46,14 @@
         android:id="@+id/profileFragment"
         android:name="com.bmn.bookfinder.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/topicFragment"
         android:name="com.bmn.bookfinder.fragments.TopicFragment"
@@ -75,4 +82,12 @@
             android:defaultValue=""
             app:argType="string" />
     </activity>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.bmn.bookfinder.fragments.SignUpFragment"
+        android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.bmn.bookfinder.fragments.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>
