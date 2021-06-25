@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [BookEntity::class], version = 1, exportSchema = false)
+@Database(entities = [BookEntity::class], version = 2, exportSchema = false)
 @TypeConverters(
     Converters::class
 )
@@ -22,7 +22,9 @@ abstract class AppDatabase : RoomDatabase() {
             if (!::INSTANCE.isInitialized) {
                 synchronized(AppDatabase::class.java) {
                     INSTANCE = Room.databaseBuilder(context!!, AppDatabase::class.java, DB_NAME)
-                        .allowMainThreadQueries().build()
+                        .fallbackToDestructiveMigration()
+                        .allowMainThreadQueries()
+                        .build()
                 }
             }
             return INSTANCE
