@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.bmn.bookfinder.adapters.TopicBooksAdapter
 import com.bmn.bookfinder.adapters.TopicBooksAdapter.OnItemTopicBookClick
 import com.bmn.bookfinder.data.room.AppDatabase.Companion.getDatabase
@@ -16,13 +17,15 @@ import com.bmn.bookfinder.databinding.FragmentTopicBinding
  * ndricim@frakton.com
  */
 class TopicFragment : Fragment(), OnItemTopicBookClick {
+
+    private val args by navArgs<TopicFragmentArgs>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentTopicBinding.inflate(layoutInflater)
-        val args = TopicFragmentArgs.fromBundle(arguments)
         binding.topicTitle.text = args.topicTitle
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
         val list = getDatabase(context).bookDao.getBookByTopicId(args.topicId)
@@ -34,8 +37,7 @@ class TopicFragment : Fragment(), OnItemTopicBookClick {
     }
 
     override fun onItemTopicBookClick(view: View, bookId: String) {
-        val action = TopicFragmentDirections.actionTopicFragmentToBookActivity()
-        action.bookId = bookId
+        val action = TopicFragmentDirections.actionTopicFragmentToBookActivity(bookId)
         Navigation.findNavController(view).navigate(action)
     }
 }

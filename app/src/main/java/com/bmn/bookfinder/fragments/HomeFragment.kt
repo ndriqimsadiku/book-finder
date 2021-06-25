@@ -62,8 +62,7 @@ class HomeFragment : Fragment(), TopPicksAdapter.ItemClickListener, OnTopicsSele
     }
 
     override fun onItemClick(view: View?, id: String?) {
-        val action = HomeFragmentDirections.actionHomeFragmentToBookActivity()
-        action.bookId = id!!
+        val action = HomeFragmentDirections.actionHomeFragmentToBookActivity(bookId = id!!)
         Navigation.findNavController(requireView()).navigate(action)
     }
 

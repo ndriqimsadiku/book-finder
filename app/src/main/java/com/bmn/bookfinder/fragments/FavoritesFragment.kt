@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bmn.bookfinder.adapters.FavoriteTopicsAdapter
 import com.bmn.bookfinder.data.room.AppDatabase.Companion.getDatabase
@@ -23,8 +22,11 @@ class FavoritesFragment : Fragment() {
         init()
         val adapter =
             FavoriteTopicsAdapter { book ->
-                val action = FavoritesFragmentDirections.actionFavoritesFragmentToTopicFragment(book.topicId)
-                action.topicTitle = book.title
+                val action =
+                    FavoritesFragmentDirections.actionFavoritesFragmentToTopicFragment(
+                        book.topicId,
+                        topicTitle = book.title,
+                    )
                 findNavController().navigate(action)
             }
         val bookEntities = getDatabase(context).bookDao.favoriteTopics

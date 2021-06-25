@@ -21,7 +21,7 @@ import com.bmn.bookfinder.models.googlebooks.GBResponse
 import com.bmn.bookfinder.models.googlebooks.ResponseItem
 import java.util.*
 
-class DiscoverFragment : Fragment(), OnApiResponse, OnItemTopicBookClick {
+class DiscoverFragment : Fragment(), OnApiResponse<ApiResponse>, OnItemTopicBookClick {
 
     private lateinit var binding: FragmentDiscoverBinding
     private var mApiFunctions: ApiFunctions? = null
@@ -53,7 +53,7 @@ class DiscoverFragment : Fragment(), OnApiResponse, OnItemTopicBookClick {
         }
     }
 
-    override fun onApiResponseCallback(status: Boolean, apiResponse: ApiResponse, message: String) {
+    override fun onApiResponseCallback(status: Boolean, apiResponse: ApiResponse?, message: String) {
         progressDialog?.cancel()
         if (status) {
             val bookEntities = mutableListOf<BookEntity>()
@@ -95,8 +95,7 @@ class DiscoverFragment : Fragment(), OnApiResponse, OnItemTopicBookClick {
     }
 
     override fun onItemTopicBookClick(view: View, bookId: String) {
-        val action = DiscoverFragmentDirections.actionDiscoverFragmentToBookActivity()
-        action.bookId = bookId
+        val action = DiscoverFragmentDirections.actionDiscoverFragmentToBookActivity(bookId)
         Navigation.findNavController(requireView()).navigate(action)
     }
 

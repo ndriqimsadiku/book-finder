@@ -3,16 +3,17 @@ package com.bmn.bookfinder.data.network.remote
 import android.content.Context
 import com.bmn.bookfinder.data.network.remote.ApiUtils.getGoogleApiService
 import com.bmn.bookfinder.helpers.Google
+import com.bmn.bookfinder.models.ApiResponse
 import com.bmn.bookfinder.models.googlebooks.GBResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ApiFunctions {
-    var apiResponseListener: ApiInterfaces.OnApiResponse? =
+    var apiResponseListener: ApiInterfaces.OnApiResponse<ApiResponse>? =
         null
 
-    fun setApiGenresResponseListener(apiResponseListener: ApiInterfaces.OnApiResponse?) {
+    fun setApiGenresResponseListener(apiResponseListener: ApiInterfaces.OnApiResponse<ApiResponse>?) {
         this.apiResponseListener = apiResponseListener
     }
 
@@ -25,7 +26,12 @@ class ApiFunctions {
             override fun onResponse(call: Call<GBResponse?>, response: Response<GBResponse?>) {
                 var error: String?
                 if (response.isSuccessful) {
-                    apiResponseListener?.onApiResponseCallback(true, response.body(), "")
+                    response.body()?.let {
+                        apiResponseListener?.onApiResponseCallback(
+                            true,
+                            it, ""
+                        )
+                    }
                 } else {
                     try {
                         error = response.errorBody()!!.string()
@@ -33,12 +39,17 @@ class ApiFunctions {
                         error = "Fail"
                         e.printStackTrace()
                     }
-                    apiResponseListener?.onApiResponseCallback(false, response.body(), error)
+                    response.body()?.let {
+                        apiResponseListener?.onApiResponseCallback(
+                            false,
+                            it, error ?: ""
+                        )
+                    }
                 }
             }
 
             override fun onFailure(call: Call<GBResponse?>, t: Throwable) {
-                apiResponseListener?.onApiResponseCallback(false, null, t.message)
+                apiResponseListener?.onApiResponseCallback(false, null, t.message ?: "")
             }
         })
     }
@@ -52,20 +63,30 @@ class ApiFunctions {
             override fun onResponse(call: Call<GBResponse?>, response: Response<GBResponse?>) {
                 var error: String?
                 if (response.isSuccessful) {
-                    apiResponseListener?.onApiResponseCallback(true, response.body(), "")
+                    response.body()?.let {
+                        apiResponseListener?.onApiResponseCallback(
+                            true,
+                            it, ""
+                        )
+                    }
                 } else {
                     try {
-                        error = response.errorBody()!!.string()
+                        error = response.errorBody()?.string()
                     } catch (e: Exception) {
                         error = "Fail"
                         e.printStackTrace()
                     }
-                    apiResponseListener?.onApiResponseCallback(false, response.body(), error)
+                    response.body()?.let {
+                        apiResponseListener?.onApiResponseCallback(
+                            false,
+                            it, error ?: ""
+                        )
+                    }
                 }
             }
 
             override fun onFailure(call: Call<GBResponse?>, t: Throwable) {
-                apiResponseListener?.onApiResponseCallback(false, null, t.message)
+                apiResponseListener?.onApiResponseCallback(false, null, t.message ?: "")
             }
         })
     }

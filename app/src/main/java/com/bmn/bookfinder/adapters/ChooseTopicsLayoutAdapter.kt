@@ -31,9 +31,9 @@ class ChooseTopicsLayoutAdapter(val context: Context?,val topics: List<Topic>) :
         val context = holder.itemView.context
         val thumbnailUrl = currentTopic.thumbnailUrl
         holder.text.text = currentTopic.text
-        holder.checkedLayer.visibility = if (SharedPrefUtils.getFavoriteIds(context)
-                .contains(currentTopic)
-        ) View.VISIBLE else View.GONE
+        holder.checkedLayer.visibility =
+            if (SharedPrefUtils.getFavoriteIds(context).contains(currentTopic.id)) View.VISIBLE
+            else View.GONE
         holder.constraintLayout.setOnClickListener { view: View? ->
             if (holder.checkedLayer.visibility == View.VISIBLE) {
                 SharedPrefUtils.removeFavoriteId(context, currentTopic.id)

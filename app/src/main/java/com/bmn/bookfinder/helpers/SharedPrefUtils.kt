@@ -22,7 +22,7 @@ object SharedPrefUtils {
         return sharedPreferences?.getLong(SharedPrefs.FIRST_TIME_USED_VALUE, 0L) ?: 0L
     }
 
-    fun storeFavoriteIds(context: Context, ids: ArrayList<Int?>?) {
+    fun storeFavoriteIds(context: Context, ids: List<Int?>?) {
         val preferences = context.getSharedPreferences(
             SharedPrefs.SELECTED_TOPICS,
             Context.MODE_PRIVATE
@@ -34,8 +34,7 @@ object SharedPrefUtils {
         editor.apply()
     }
 
-    @JvmStatic
-    fun getFavoriteIds(context: Context): ArrayList<Int?> {
+    fun getFavoriteIds(context: Context): MutableList<Int?> {
         val preferences = context.getSharedPreferences(
             SharedPrefs.SELECTED_TOPICS,
             Context.MODE_PRIVATE

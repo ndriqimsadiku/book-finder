@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    var retrofit: Retrofit? = null
-    fun getApi(context: Context?, baseUrl: String): Retrofit? {
+    private  lateinit var retrofit: Retrofit
+    fun getApi(context: Context?, baseUrl: String): Retrofit {
         val gson = GsonBuilder()
             .setLenient()
             .create()

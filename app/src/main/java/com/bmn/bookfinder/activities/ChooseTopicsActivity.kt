@@ -27,7 +27,7 @@ import com.bmn.bookfinder.utils.setTopBottomPadding
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
-class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiResponse {
+class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiResponse<ApiResponse> {
     private var mApiFunctions: ApiFunctions? = null
     private var selectedTopics: ArrayList<Topic>? = null
     private var currentIndex = 0
@@ -99,14 +99,14 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiRes
         return selectedTopics
     }
 
-    override fun onApiResponseCallback(status: Boolean, apiResponse: ApiResponse, message: String) {
+    override fun onApiResponseCallback(status: Boolean, apiResponse: ApiResponse?, message: String) {
         if (status) {
             val bookEntities = ArrayList<BookEntity>()
             val gbResponse = apiResponse as GBResponse
             if (gbResponse != null) {
                 for (item in gbResponse.items) {
-                    if (item.volumeInfo.imageLinks != null) {
-                        bookEntities.add(getBookFromNetwork(item))
+                    if (item.volumeInfo?.imageLinks != null) {
+                        getBookFromNetwork(item)?.let { bookEntities.add(it) }
                     }
                 }
                 val databaseAsync = DatabaseAsync(appDatabase!!.bookDao) { success: Boolean ->
@@ -142,20 +142,23 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiRes
             }
         }
 
-    private fun getBookFromNetwork(item: ResponseItem): BookEntity {
+    private fun getBookFromNetwork(item: ResponseItem): BookEntity? {
         val info = item.volumeInfo
-        return BookEntity(
-            item.id,
-            selectedTopics!![currentIndex].id?.toLong() ?: 0L,
-            selectedTopics!![currentIndex].text,
-            info.title,
-            info.description,
-            info.imageLinks.thumbnail,
-            info.authors,
-            info.averageRating,
-            info.pageCount,
-            info.publishedDate,
-            false
-        )
+        if (info != null) {
+            return BookEntity(
+                item.id ?: "",
+                0,
+                "General",
+                info.title ?: "",
+                info.description ?: "",
+                info.imageLinks?.thumbnail ?: "",
+                info.authors ?: emptyList(),
+                info.averageRating,
+                info.pageCount,
+                info.publishedDate ?: "",
+                false
+            )
+        }
+        return null
     }
 }
