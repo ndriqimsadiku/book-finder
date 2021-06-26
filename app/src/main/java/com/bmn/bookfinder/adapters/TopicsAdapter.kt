@@ -35,7 +35,7 @@ class TopicsAdapter(context: Context?, topics: List<Topic>?) :
         holder.checkedLayer.visibility =
             if (checkedTopics.contains(currentTopic)) View.VISIBLE else View.GONE
         holder.text.text = currentTopic.text
-        holder.constraintLayout.setOnClickListener { view: View? ->
+        holder.constraintLayout.setOnClickListener {
             holder.checkedLayer.visibility =
                 if (holder.checkedLayer.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             if (mListener != null) {

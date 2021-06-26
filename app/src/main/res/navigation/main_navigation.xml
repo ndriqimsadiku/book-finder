@@ -15,7 +15,7 @@
             app:destination="@id/discoverFragment" />
         <action
             android:id="@+id/action_homeFragment_to_bookActivity"
-            app:destination="@id/bookActivity" />
+            app:destination="@id/bookFragment" />
     </fragment>
 
     <fragment
@@ -27,7 +27,7 @@
             app:destination="@id/favoritesFragment" />
         <action
             android:id="@+id/action_discoverFragment_to_bookActivity"
-            app:destination="@id/bookActivity" />
+            app:destination="@id/bookFragment" />
     </fragment>
 
     <fragment
@@ -46,7 +46,7 @@
         android:id="@+id/profileFragment"
         android:name="com.bmn.bookfinder.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -70,18 +70,18 @@
             app:argType="string" />
         <action
             android:id="@+id/action_topicFragment_to_bookActivity"
-            app:destination="@id/bookActivity" />
+            app:destination="@id/bookFragment" />
 
     </fragment>
-    <activity
-        android:id="@+id/bookActivity"
+    <fragment
+        android:id="@+id/bookFragment"
         android:name="com.bmn.bookfinder.fragments.BookFragment"
-        android:label="BookActivity">
+        android:label="BookFragment">
         <argument
             android:name="bookId"
             android:defaultValue=""
             app:argType="string" />
-    </activity>
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.bmn.bookfinder.fragments.SignUpFragment"

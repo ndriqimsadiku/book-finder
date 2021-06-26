@@ -22,7 +22,7 @@ import com.bmn.bookfinder.models.ApiResponse
 import com.bmn.bookfinder.models.Topic
 import com.bmn.bookfinder.models.googlebooks.GBResponse
 import com.bmn.bookfinder.models.googlebooks.ResponseItem
-import com.bmn.bookfinder.utils.AppUtils.isInternetAvailable
+import com.bmn.bookfinder.utils.isInternetAvailable
 import com.bmn.bookfinder.utils.setTopBottomPadding
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -33,7 +33,7 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiRes
     private var selectedTopics: ArrayList<Topic>? = null
     private var currentIndex = 0
     private var appDatabase: AppDatabase? = null
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityChooseTopicsBinding.inflate(
@@ -105,26 +105,24 @@ class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiRes
         if (status) {
             val bookEntities = ArrayList<BookEntity>()
             val gbResponse = apiResponse as GBResponse
-            if (gbResponse != null) {
-                for (item in gbResponse.items) {
-                    if (item.volumeInfo?.imageLinks != null) {
-                        getBookFromNetwork(item)?.let { bookEntities.add(it) }
-                    }
+            for (item in gbResponse.items) {
+                if (item.volumeInfo?.imageLinks != null) {
+                    getBookFromNetwork(item)?.let { bookEntities.add(it) }
                 }
-                val databaseAsync = DatabaseAsync(appDatabase!!.bookDao) { success: Boolean ->
-                    currentIndex++
-                    if (currentIndex < selectedTopics!!.size) {
-                        nextTopicBooks
-                    } else {
-                        startActivity(Intent(applicationContext, MainActivity::class.java))
-                        SharedPrefUtils.storeFirstTimeUsedTimestamp(
-                            applicationContext,
-                            System.currentTimeMillis()
-                        )
-                    }
-                }
-//                databaseAsync.execute(bookEntities!!)
             }
+            DatabaseAsync(appDatabase!!.bookDao) {
+                currentIndex++
+                if (currentIndex < selectedTopics!!.size) {
+                    nextTopicBooks
+                } else {
+                    startActivity(Intent(applicationContext, MainActivity::class.java))
+                    SharedPrefUtils.storeFirstTimeUsedTimestamp(
+                        applicationContext,
+                        System.currentTimeMillis()
+                    )
+                }
+            }
+//                databaseAsync.execute(bookEntities!!)
         }
     }
 
