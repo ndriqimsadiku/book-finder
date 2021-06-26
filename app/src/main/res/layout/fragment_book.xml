@@ -10,7 +10,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".activities.BookActivity">
+            tools:context=".fragments.BookFragment">
 
             <include layout="@layout/background_profile_images" />
 
@@ -60,6 +60,7 @@
                 android:id="@+id/book_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:numStars="5"
                 android:scaleX="0.7"
                 android:scaleY="0.7"

@@ -75,7 +75,7 @@
     </fragment>
     <activity
         android:id="@+id/bookActivity"
-        android:name="com.bmn.bookfinder.activities.BookActivity"
+        android:name="com.bmn.bookfinder.fragments.BookFragment"
         android:label="BookActivity">
         <argument
             android:name="bookId"

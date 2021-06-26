@@ -28,10 +28,12 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class ChooseTopicsActivity : AppCompatActivity(), View.OnClickListener, OnApiResponse<ApiResponse> {
+
     private var mApiFunctions: ApiFunctions? = null
     private var selectedTopics: ArrayList<Topic>? = null
     private var currentIndex = 0
     private var appDatabase: AppDatabase? = null
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityChooseTopicsBinding.inflate(

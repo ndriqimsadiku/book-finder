@@ -15,8 +15,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".activities.BookActivity"/>
-        <activity android:name=".activities.AccountActivity" />
         <activity android:name=".activities.ChooseTopicsActivity" />
         <activity
             android:name=".activities.FirstUseSliderActivity"
